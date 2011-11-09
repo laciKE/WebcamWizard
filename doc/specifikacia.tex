@@ -1,0 +1,29 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{slovak}
+\begin{document}
+\title{WebcamWizard}
+\author{Ladislav Bačo, Anton Kovaľ \\ {\it Kubo Kováč (vedúci)}}
+\maketitle
+
+\paragraph{Cieľ projektu:} Vybrané možnosti ovládania PC pomocou webkamery.
+
+\paragraph{Princíp:} Snímanie a rozoznávanie užívateľských gest pomocou webkamery, pričom na uľahčenie identifikácie budeme používať farebné LED diódy. Táto technológia môže mať široké využitie v hernom priemysle, školstve, ale môže priniesť aj nové koncepty ovládania elektrických spotrebičov.\\
+V ročníkovom projekte by sme sa chceli zaoberať interaktívnou tabuľou, pričom pracovná plocha tabule bude zobrazovaná pomocou dataprojektora a užívateľ bude snímaný webkamerou z notebooku alebo externou webkamerou.\\
+Naša interaktívna tabuľa by mala mať nasledujúce vlastnosti:
+\begin{enumerate}
+\item kreslenie pomocou \uv{svetelného pera}
+\item kalibrácia pracovnej plochy vzhľadom na aktuálne podmienky
+\item možnosť zmeny farby pera
+\item uloženie aktuálnej pracovnej plochy ako bitmapový obrázok
+\item načítanie bitmapového obrázka
+\end{enumerate}
+
+(V prípade príliš veľkých problémov s interaktívnou tabuľou sa budeme zaoberať hrou so skutočným priestorovým efektom.)
+
+\paragraph{Implementácia:} programovací jazyk C++, knižnica OpenCV (prípadne ešte OpenGL)
+\paragraph{Podporované platformy:} Linux, Windows XP, Vista, 7, možno aj Mac OS X
+\paragraph{repozitár:} {\tt git://github.com/laciKE/WebcamWizard.git}
+
+
+\end{document}
