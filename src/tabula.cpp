@@ -10,7 +10,28 @@ using namespace std;
 //(Tono)
 int Tabula::calibrate(){
 
-	//TODO kalibracia	
+	//show red screen for autocalibration	
+	int W=pracovnaPlocha->widthStep;
+	int H=pracovnaPlocha->height;
+	int x,y;
+	for(y=0; y<H; y++)
+	for(x=0; x<W; x+=3) 
+	{
+		pracovnaPlocha->imageData[y*W+x+2]=255;
+   		pracovnaPlocha->imageData[y*W+x+1]=0;
+		pracovnaPlocha->imageData[y*W+x]=0;
+	}
+
+	cvShowImage("Tabula",pracovnaPlocha);
+
+	//capture frame from webcam
+	IplImage * frame=cvQueryFrame(webcam);
+	if(!frame)
+		return 0;
+
+	//TODO calibration
+
+
 
 	for(int i=0; i<4; i++)
 		calibrationData.roh[i].x=calibrationData.roh[i].y=0;
@@ -38,6 +59,7 @@ int Tabula::update(){
 	}
 
 	cvShowImage("Tabula",pracovnaPlocha);
+	//cvShowImage("Tabula",frame);
 
 	return 1;	
 }
@@ -49,6 +71,8 @@ Tabula::~Tabula(){
 
 Tabula::Tabula(){
 	cvNamedWindow("Tabula", CV_WINDOW_AUTOSIZE );
-	webcam=cvCreateCameraCapture(0);
+	webcam=cvCreateCameraCapture(CV_CAP_ANY);
+	//TODO check webcam 
+
 	pracovnaPlocha=cvCreateImage(cvSize(640,480),IPL_DEPTH_8U,3);
 }
