@@ -11,11 +11,11 @@ LIBS += -lcv -lhighgui -lcvaux -lml
 
 BIN = ../bin/
 
-all: tabula
+all: blackboard
 	
-tabula: $(BIN)tabula.o $(BIN)main.o
-	$(CC) -o $(BIN)tabula $(BIN)tabula.o $(BIN)main.o $(LIBS)
-$(BIN)tabula.o: tabula.cpp tabula.hpp
-	$(CC) $(CFLAGS) -c -o $(BIN)tabula.o tabula.cpp
-$(BIN)main.o: main.cpp tabula.hpp
+blackboard: $(BIN)blackboard.o $(BIN)main.o
+	$(CC) -o $(BIN)blackboard $(BIN)blackboard.o $(BIN)main.o $(LIBS)
+$(BIN)blackboard.o: blackboard.cpp blackboard.hpp
+	$(CC) $(CFLAGS) -c -o $(BIN)blackboard.o blackboard.cpp
+$(BIN)main.o: main.cpp blackboard.hpp
 	$(CC) $(CFLAGS) -c -o $(BIN)main.o main.cpp
