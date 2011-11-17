@@ -4,13 +4,14 @@
 #include "blackboard.hpp"
 #include "calibrator.hpp"
 
+using namespace std;
+
 //calibration of desktop
 //result will be stored in calibrationData (vertices of desktop's rectangle in clockwise order from top-left vertex)
 //return 1 iff success, otherwise 0
 //(Tono)
 int Calibrator::calibrate(){
-   IplImage * desktop=cvCreateImage(cvSize(blackBoard->desktopDrawer->desktopWidth,blackBoard->desktopDrawer->desktopHeight),IPL_DEPTH_8U,3);
-
+	IplImage * desktop=cvCreateImage(cvSize(blackBoard->desktopDrawer->desktopWidth,blackBoard->desktopDrawer->desktopHeight),IPL_DEPTH_8U,3);
 	//show red screen for autocalibration	
 	int W=desktop->widthStep;
 	int H=desktop->height;

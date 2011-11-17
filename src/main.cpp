@@ -13,6 +13,7 @@ int main(int argc, char** argv)
 	{
 		char c=cvWaitKey(33);
 		if(c==27) break;
+		if(c=='c') blackBoard->desktopDrawer->clear();
 	}
 	delete blackBoard;
 
