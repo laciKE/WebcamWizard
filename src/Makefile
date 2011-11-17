@@ -1,12 +1,6 @@
 CC = g++
 CFLAGS = -W -Wall -O2 -I/usr/include/opencv
 
-ifeq ($(shell uname),Darwin)
-	LIBS = -framework OpenGL -framework GLUT
-else
-	LIBS = -lglut -lGLU -lGL
-endif
-
 LIBS += -lcv -lhighgui -lcvaux -lml
 
 BIN = ../bin/
