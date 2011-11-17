@@ -7,15 +7,14 @@ using namespace std;
 int main(int argc, char** argv)
 {
 	//vytvorenie a kalibracia novej tabule
-	BlackBoard * blackboard = new BlackBoard();
-	blackboard->initDesktop();
+	BlackBoard * blackBoard = new BlackBoard();
 	//obnovujem obraz na tabuli, kym nie je stlaceny ESC
-	while(blackboard->update()) 
+	while(blackBoard->update()) 
 	{
 		char c=cvWaitKey(33);
 		if(c==27) break;
 	}
-	delete blackboard;
+	delete blackBoard;
 
 	return 0;
 }

@@ -1,0 +1,33 @@
+APPLICATION STRUCTURE
+
+      +-----------------+
+      |class BlackBoard |
+      +-----------------+
+ +----| calibrator      |
+ |    | desktopDrawer   |--+++--+
+ |    | webcam          |       |
+ |    | update()        |       |
+ |    +-----------------+       |
+ |                  ^  ^        |
+ |                  .  .        |
+ v                  .  .        v
++-----------------+ .  .     +--------------------+
+|class Calibrator | .  .     |class DesktopDrawer |
++-----------------+ .  .     +--------------------+
+| blackBoard      |..  ......| blackBoard         |
+| calibrationData |          | desktop            |
+| calibrate()     |          | desktopWidth       |
++-----------------+          | desktopHeight      |
+                             | isLightPen()       |
+                             | getDesktopCoords() |
+                             | update()           |
+                             +--------------------+
+
+BlackBoard contains a webcam capture and objects calibrator and desktopDrawer and manages windows for desktop vies and webcam view (webcam view is only for debuging now).
+DesktopDrawer contains image of current desktop view of blackBoard and methods for capture frame from webcam, analyze it and update desktop view.
+Calibrator is for autocalibration desktopDrawer (calibrator show in desktop window image used in calibration proces).
+
+Both desktopDrawer and calibrator have a pointer to their parent BlackBoard. This pointer is used to accessing BlackBoard data.
+
+
+//sorry for my bad english
