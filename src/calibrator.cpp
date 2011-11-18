@@ -26,14 +26,16 @@ int Calibrator::calibrate(){
 
 	cvShowImage(blackBoard->blackBoardWindow,desktop);
 
+	cvWaitKey(1000);
+
 	//capture frame from webcam
 	IplImage * frame=cvQueryFrame(blackBoard->webcam);
 	if(!frame)
 		return 0;
 
-	cvShowImage(blackBoard->webcamWindow,frame);
+	//cvShowImage(blackBoard->webcamWindow,frame);
 
-	cvWaitKey(1000);
+	//cvWaitKey(1000);
 
 	//TODO calibration
 
@@ -41,6 +43,8 @@ int Calibrator::calibrate(){
 	calibrationData.vertex[1]=cvPoint(448,46);
 	calibrationData.vertex[2]=cvPoint(480,309);
 	calibrationData.vertex[3]=cvPoint(60,308);
+
+	cvReleaseImage(&desktop);
 
 	return 1;
 }
