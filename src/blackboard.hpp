@@ -15,6 +15,7 @@ class BlackBoard {
 		DesktopDrawer * desktopDrawer;
 		int update();
 		char blackBoardWindow[64], webcamWindow[64];
+		void Init();
 		BlackBoard();
 		~BlackBoard();
 };
