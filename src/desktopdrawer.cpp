@@ -113,7 +113,7 @@ bool DesktopDrawer::isLightPen(int R, int G, int B){
 void DesktopDrawer::drawPoint(CvPoint A){
 	desktop->imageData[A.y*desktop->widthStep+3*A.x+2]=0;
 	desktop->imageData[A.y*desktop->widthStep+3*A.x+1]=255;
-	desktop->imageData[A.y*desktop->widthStep+3*A.x+0]=0;
+	desktop->imageData[A.y*desktop->widthStep+3*A.x+0]=255;
 }
 
 inline int sqr(int x){

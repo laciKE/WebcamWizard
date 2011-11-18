@@ -31,14 +31,16 @@ int Calibrator::calibrate(){
 	if(!frame)
 		return 0;
 
+	cvShowImage(blackBoard->webcamWindow,frame);
+
+	cvWaitKey(1000);
+
 	//TODO calibration
 
-
-
-	calibrationData.vertex[0]=cvPoint(0,0);
-	calibrationData.vertex[1]=cvPoint(639,0);
-	calibrationData.vertex[2]=cvPoint(639,479);
-	calibrationData.vertex[3]=cvPoint(0,479);
+	calibrationData.vertex[0]=cvPoint(90,39);
+	calibrationData.vertex[1]=cvPoint(448,46);
+	calibrationData.vertex[2]=cvPoint(480,309);
+	calibrationData.vertex[3]=cvPoint(60,308);
 
 	return 1;
 }

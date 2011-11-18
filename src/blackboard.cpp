@@ -19,16 +19,9 @@ BlackBoard::~BlackBoard(){
 }
 
 BlackBoard::BlackBoard(){
-	//windows initialization
+	//window names initialization
 	strcpy(blackBoardWindow,"BlackBoard");
 	strcpy(webcamWindow,"Webcam");
-	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE );
-	cvMoveWindow(blackBoardWindow,328,0);
-
-	cvNamedWindow(webcamWindow,CV_WINDOW_AUTOSIZE);
-	cvMoveWindow(webcamWindow,0,0);
-	//cvSetWindowProperty("BlackBoard",CV_WND_PROP_FULLSCREEN,0);
-
 	//webcam initialization 
 	webcam=cvCaptureFromCAM(0);
 	//webcam=cvCreateCameraCapture(CV_CAP_ANY); 
@@ -39,6 +32,16 @@ BlackBoard::BlackBoard(){
 	//private variables initialization
 	desktopDrawer = new DesktopDrawer(this);
 	calibrator = new Calibrator(this);
-	calibrator->calibrate();
 }
 
+void BlackBoard::Init(){
+	//windows initialization
+	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE );
+	cvMoveWindow(blackBoardWindow,328,0);
+
+	cvNamedWindow(webcamWindow,CV_WINDOW_AUTOSIZE);
+	cvMoveWindow(webcamWindow,0,0);
+	//cvSetWindowProperty("BlackBoard",CV_WND_PROP_FULLSCREEN,0);
+
+	calibrator->calibrate();
+}
