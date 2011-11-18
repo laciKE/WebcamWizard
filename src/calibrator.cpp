@@ -26,7 +26,7 @@ int Calibrator::calibrate(){
 
 	cvShowImage(blackBoard->blackBoardWindow,desktop);
 
-	cvWaitKey(1000);
+	cvWaitKey(250);
 
 	//capture frame from webcam
 	IplImage * frame=cvQueryFrame(blackBoard->webcam);
@@ -35,7 +35,7 @@ int Calibrator::calibrate(){
 
 	//cvShowImage(blackBoard->webcamWindow,frame);
 
-	//cvWaitKey(1000);
+	cvWaitKey(1000);
 
 	//TODO calibration
 
