@@ -6,11 +6,13 @@
 
 using namespace std;
 
-int BlackBoard::update(){
+int BlackBoard::update()
+{
 	return desktopDrawer->update();
 }
 
-BlackBoard::~BlackBoard(){
+BlackBoard::~BlackBoard()
+{
 	delete calibrator;
 	delete desktopDrawer;
 	cvReleaseCapture(&webcam);
@@ -18,14 +20,16 @@ BlackBoard::~BlackBoard(){
 	cvDestroyWindow(webcamWindow);
 }
 
-BlackBoard::BlackBoard(){
+BlackBoard::BlackBoard()
+{
 	//window names initialization
 	strcpy(blackBoardWindow,"BlackBoard");
 	strcpy(webcamWindow,"Webcam");
-	//webcam initialization 
+	//webcam initialization
 	webcam=cvCaptureFromCAM(0);
-	//webcam=cvCreateCameraCapture(CV_CAP_ANY); 
-	if(!webcam){
+	//webcam=cvCreateCameraCapture(CV_CAP_ANY);
+	if (!webcam)
+	{
 		cerr << "Create webcam capture failed\n";
 		exit(1);
 	}
@@ -34,7 +38,8 @@ BlackBoard::BlackBoard(){
 	calibrator = new Calibrator(this);
 }
 
-void BlackBoard::Init(){
+void BlackBoard::Init()
+{
 	//windows initialization
 	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE );
 	cvMoveWindow(blackBoardWindow,328,0);

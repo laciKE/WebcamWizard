@@ -6,18 +6,19 @@
 #include "calibrator.hpp"
 #include "desktopdrawer.hpp"
 
-class BlackBoard {
-	private:
+class BlackBoard
+{
+private:
 
-	public:	
-		CvCapture * webcam;
-		Calibrator * calibrator;
-		DesktopDrawer * desktopDrawer;
-		int update();
-		char blackBoardWindow[64], webcamWindow[64];
-		void Init();
-		BlackBoard();
-		~BlackBoard();
+public:
+	CvCapture * webcam;
+	Calibrator * calibrator;
+	DesktopDrawer * desktopDrawer;
+	int update();
+	char blackBoardWindow[64], webcamWindow[64];
+	void Init();
+	BlackBoard();
+	~BlackBoard();
 };
 
 #endif

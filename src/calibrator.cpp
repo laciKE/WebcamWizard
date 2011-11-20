@@ -10,19 +10,20 @@ using namespace std;
 //result will be stored in calibrationData (vertices of desktop's rectangle in clockwise order from top-left vertex)
 //return 1 iff success, otherwise 0
 //(Tono)
-int Calibrator::calibrate(){
+int Calibrator::calibrate()
+{
 	IplImage * desktop=cvCreateImage(cvSize(blackBoard->desktopDrawer->desktopWidth,blackBoard->desktopDrawer->desktopHeight),IPL_DEPTH_8U,3);
-	//show red screen for autocalibration	
+	//show red screen for autocalibration
 	int W=desktop->widthStep;
 	int H=desktop->height;
 	int x,y;
-	for(y=0; y<H; y++)
-	for(x=0; x<W; x+=3) 
-	{
-		desktop->imageData[y*W+x+2]=255;
-   		desktop->imageData[y*W+x+1]=0;
-		desktop->imageData[y*W+x]=0;
-	}
+	for (y=0; y<H; y++)
+		for (x=0; x<W; x+=3)
+		{
+			desktop->imageData[y*W+x+2]=255;
+			desktop->imageData[y*W+x+1]=0;
+			desktop->imageData[y*W+x]=0;
+		}
 
 	cvShowImage(blackBoard->blackBoardWindow,desktop);
 
@@ -30,7 +31,7 @@ int Calibrator::calibrate(){
 
 	//capture frame from webcam
 	IplImage * frame=cvQueryFrame(blackBoard->webcam);
-	if(!frame)
+	if (!frame)
 		return 0;
 
 	//cvShowImage(blackBoard->webcamWindow,frame);
@@ -49,10 +50,12 @@ int Calibrator::calibrate(){
 	return 1;
 }
 
-Calibrator::Calibrator(BlackBoard * parent){
+Calibrator::Calibrator(BlackBoard * parent)
+{
 	blackBoard = parent;
 }
 
-Calibrator::~Calibrator(){
+Calibrator::~Calibrator()
+{
 
 }
