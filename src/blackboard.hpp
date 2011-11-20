@@ -11,9 +11,9 @@ class BlackBoard
 private:
 
 public:
-	CvCapture * webcam;
-	Calibrator * calibrator;
-	DesktopDrawer * desktopDrawer;
+	CvCapture* webcam;
+	Calibrator* calibrator;
+	DesktopDrawer* desktopDrawer;
 	int update();
 	char blackBoardWindow[64], webcamWindow[64];
 	void Init();

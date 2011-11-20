@@ -14,7 +14,7 @@ typedef struct
 class Calibrator
 {
 private:
-	class BlackBoard * blackBoard;
+	class BlackBoard* blackBoard;
 
 public:
 	//coordinates of blackboard's corners in webcam
