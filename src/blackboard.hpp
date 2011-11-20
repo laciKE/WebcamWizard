@@ -6,8 +6,7 @@
 #include "calibrator.hpp"
 #include "desktopdrawer.hpp"
 
-class BlackBoard
-{
+class BlackBoard {
 private:
 
 public:

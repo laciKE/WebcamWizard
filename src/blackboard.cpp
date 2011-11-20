@@ -6,30 +6,26 @@
 
 using namespace std;
 
-int BlackBoard::update()
-{
+int BlackBoard::update() {
 	return desktopDrawer->update();
 }
 
-BlackBoard::~BlackBoard()
-{
+BlackBoard::~BlackBoard() {
 	delete calibrator;
 	delete desktopDrawer;
 	cvReleaseCapture(&webcam);
-	cvDestroyWindow(blackBoardWindow);
-	cvDestroyWindow(webcamWindow);
+	cvDestroyWindow( blackBoardWindow);
+	cvDestroyWindow( webcamWindow);
 }
 
-BlackBoard::BlackBoard()
-{
+BlackBoard::BlackBoard() {
 	//window names initialization
-	strcpy(blackBoardWindow,"BlackBoard");
-	strcpy(webcamWindow,"Webcam");
+	strcpy(blackBoardWindow, "BlackBoard");
+	strcpy(webcamWindow, "Webcam");
 	//webcam initialization
-	webcam=cvCaptureFromCAM(0);
+	webcam = cvCaptureFromCAM(0);
 	//webcam=cvCreateCameraCapture(CV_CAP_ANY);
-	if (!webcam)
-	{
+	if (!webcam) {
 		cerr << "Create webcam capture failed\n";
 		exit(1);
 	}
@@ -38,14 +34,13 @@ BlackBoard::BlackBoard()
 	calibrator = new Calibrator(this);
 }
 
-void BlackBoard::Init()
-{
+void BlackBoard::Init() {
 	//windows initialization
-	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE );
-	cvMoveWindow(blackBoardWindow,328,0);
+	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE);
+	cvMoveWindow(blackBoardWindow, 328, 0);
 
-	cvNamedWindow(webcamWindow,CV_WINDOW_AUTOSIZE);
-	cvMoveWindow(webcamWindow,0,0);
+	cvNamedWindow(webcamWindow, CV_WINDOW_AUTOSIZE);
+	cvMoveWindow(webcamWindow, 0, 0);
 	//cvSetWindowProperty("BlackBoard",CV_WND_PROP_FULLSCREEN,0);
 
 	calibrator->calibrate();

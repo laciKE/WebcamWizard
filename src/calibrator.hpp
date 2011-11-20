@@ -5,21 +5,18 @@
 #include <opencv/highgui.h>
 #include "blackboard.hpp"
 
-typedef struct
-{
+typedef struct {
 	CvPoint vertex[4];
 } CalibrationData;
 
-
-class Calibrator
-{
+class Calibrator {
 private:
 	class BlackBoard* blackBoard;
 
 public:
 	//coordinates of blackboard's corners in webcam
 	CalibrationData calibrationData;
-	Calibrator(BlackBoard * parent);
+	Calibrator(BlackBoard* parent);
 	~Calibrator();
 	int calibrate();
 };

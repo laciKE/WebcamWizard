@@ -5,8 +5,7 @@
 #include <opencv/highgui.h>
 #include "blackboard.hpp"
 
-class DesktopDrawer
-{
+class DesktopDrawer {
 private:
 	class BlackBoard* blackBoard;
 	IplImage* desktop;
@@ -18,10 +17,10 @@ private:
 	void drawLine(CvPoint A, CvPoint B);
 public:
 
-	int desktopWidth,desktopHeight;
+	int desktopWidth, desktopHeight;
 	int update();
 	void clear();
-	DesktopDrawer(BlackBoard * parent);
+	DesktopDrawer(BlackBoard* parent);
 	~DesktopDrawer();
 };
 
