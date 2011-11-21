@@ -11,7 +11,7 @@ using namespace std;
 //return 1 iff success, otherwise 0
 //(Tono)
 int Calibrator::calibrate() {
-	IplImage * desktop = cvCreateImage(cvSize(
+	IplImage* desktop = cvCreateImage(cvSize(
 			blackBoard->desktopDrawer->desktopWidth,
 			blackBoard->desktopDrawer->desktopHeight), IPL_DEPTH_8U, 3);
 	//show red screen for autocalibration
@@ -30,7 +30,7 @@ int Calibrator::calibrate() {
 	cvWaitKey(250);
 
 	//capture frame from webcam
-	IplImage * frame = cvQueryFrame(blackBoard->webcam);
+	IplImage* frame = cvQueryFrame(blackBoard->webcam);
 	if (!frame)
 		return 0;
 

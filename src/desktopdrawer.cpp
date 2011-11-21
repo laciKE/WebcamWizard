@@ -15,7 +15,7 @@ using namespace std;
 //return 1 iff success, otherwise 0
 //(Laco)
 int DesktopDrawer::update() {
-	IplImage * frame = cvQueryFrame(blackBoard->webcam);
+	IplImage* frame = cvQueryFrame(blackBoard->webcam);
 	if (!frame)
 		return 0;
 
@@ -57,7 +57,7 @@ int DesktopDrawer::update() {
 	 cerr << "nemam pixel\n";
 	 }*/
 
-	IplImage * resizedFrame = cvCreateImage(cvSize(320, 240), frame->depth,
+	IplImage* resizedFrame = cvCreateImage(cvSize(320, 240), frame->depth,
 			frame->nChannels);
 	cvResize(frame, resizedFrame);
 	cvShowImage(blackBoard->webcamWindow, resizedFrame);
@@ -116,11 +116,11 @@ CvPoint DesktopDrawer::getDesktopCoords(int x, int y) {
 	return result;
 }
 
-bool DesktopDrawer::isLightPen(int R, int G, int B) {
+inline bool DesktopDrawer::isLightPen(int R, int G, int B) {
 	return ((R > 220) && (R > (G + B) * 2 / 3));
 }
 
-void DesktopDrawer::drawPoint(CvPoint A) {
+inline void DesktopDrawer::drawPoint(CvPoint A) {
 	desktop->imageData[A.y * desktop->widthStep + 3 * A.x + 2] = 0;
 	desktop->imageData[A.y * desktop->widthStep + 3 * A.x + 1] = 255;
 	desktop->imageData[A.y * desktop->widthStep + 3 * A.x + 0] = 255;

@@ -6,14 +6,14 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	//vytvorenie a kalibracia novej tabule
-	BlackBoard * blackBoard = new BlackBoard();
+	//initialization and calibration of new blackBoard
+	BlackBoard* blackBoard = new BlackBoard();
 	blackBoard->Init();
-	//obnovujem obraz na tabuli, kym nie je stlaceny ESC
+	//update desktop view
 	while (blackBoard->update()) {
 		char c = cvWaitKey(33);
 		if (c == 27)
-			break;
+			break; //ESC
 		if (c == 'c')
 			blackBoard->desktopDrawer->clear();
 	}
