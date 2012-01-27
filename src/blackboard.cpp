@@ -23,7 +23,7 @@ BlackBoard::BlackBoard() {
 	strcpy(blackBoardWindow, "BlackBoard");
 	strcpy(webcamWindow, "Webcam");
 	//webcam initialization
-	webcam = cvCaptureFromCAM(1);
+	webcam = cvCaptureFromCAM(0);
 	//webcam=cvCreateCameraCapture(CV_CAP_ANY);
 	if (!webcam) {
 		cerr << "Create webcam capture failed\n";
