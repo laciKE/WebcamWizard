@@ -1,6 +1,7 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <iostream>
+#include <vector>
 #include "pathfinder.hpp"
 #include "blackboard.hpp"
 
@@ -216,6 +217,7 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop){
 	int x, y, numOfPoints=0;
 	cvClearSeq(point_seq);
 	float line[4];
+	vector <CvPoint2D32f> points;
 
 	for (y = 1; y < H; y++)
 		for (x = 3; x < W; x += 3) {
@@ -223,8 +225,8 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop){
 			int G = (unsigned char) frame->imageData[y * W + x + 1];
 			int B = (unsigned char) frame->imageData[y * W + x];
 			if (isLightPen(R, G, B)){
-				cvSeqPush(point_seq,&cvPoint2D32f(x/3,y));
-				numOfPoints++;
+				points.push_back(cvPoint2D32f(x/3,y));
+				cvSeqPush(point_seq,&points[numOfPoints++]);
 			}
 		}
 
