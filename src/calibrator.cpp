@@ -11,7 +11,7 @@ int thresh = 10;
 IplImage* img = 0;
 IplImage* img0 = 0;
 CvMemStorage* storage = 0;
-CvPoint *calib[4];
+CvPoint calib[4];
 /*
 //experimental fuction
 IplImage* Experiment(IplImage* img)
@@ -128,7 +128,8 @@ IplImage* DetectAndDrawQuads(IplImage* img)
                         CvPoint *pt[4];
                         for(int i=0;i<4;i++){
                             pt[i] = (CvPoint*)cvGetSeqElem(result, i);
-                            calib[i] = (CvPoint*)cvGetSeqElem(result, i);
+                            CvPoint* Tmp = (CvPoint*)cvGetSeqElem(result, i);
+			    calib[i] = *Tmp;
                             }
                         cvLine(ret, *pt[0], *pt[1], cvScalar(255));
                         cvLine(ret, *pt[1], *pt[2], cvScalar(255));
@@ -450,17 +451,34 @@ int Calibrator::calibrate() {
     cvShowImage(blackBoard->blackBoardWindow, DetectAndDrawQuads(frame_bw));
     cvWaitKey(5000);
 	//TODO calibration
-    // manual calibration //comment by laciKE because Segmentation Fault
-    //for(int i=0; i<4; i++) {
-    //calibrationData.vertex[i] = *calib[i];
-    //cout << i << ": " << calibrationData.vertex[i] << endl;
-    //}
+    // manual calibration //comment by  because Segmentation Fault
+    //osetrit poradie vrcholov!!!!
+      int minxy=500600;
+      int mini=0;
+      for(int i = 0; i<4; i++)
+      {
+        if(calib[i].x+calib[i].y<minxy){
+		minxy=calib[i].x+calib[i].y;
+		mini=i;
+	}
+      }
+	int smer;
+	if(calib[(mini+1)%4].x>calib[mini].x)
+		smer=1;
+	else
+		smer=-1;
+      //calibrationData.vertex[0] = calib[0];
+      //cerr << 0 << ": " << calibrationData.vertex[0].x << " " <<calibrationData.vertex[0].y << endl;
+      for(int i=0; i<4; i++) {
+      calibrationData.vertex[i] = calib[(8+mini+smer*i)%4];
+      cerr << i << ": " << calibrationData.vertex[i].x << " " <<calibrationData.vertex[i].y << endl;
+      }
     
     // manual calibration
-	calibrationData.vertex[0] = cvPoint(40, 40);
-	calibrationData.vertex[1] = cvPoint(600, 40);
-	calibrationData.vertex[2] = cvPoint(600, 440);
-	calibrationData.vertex[3] = cvPoint(40, 440);
+	//calibrationData.vertex[0] = cvPoint(40, 40);
+	//calibrationData.vertex[1] = cvPoint(600, 40);
+	//calibrationData.vertex[2] = cvPoint(600, 440);
+	//calibrationData.vertex[3] = cvPoint(40, 440);
     
 
 	cvReleaseImage(&desktop);

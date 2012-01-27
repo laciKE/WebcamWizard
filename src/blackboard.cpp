@@ -23,7 +23,7 @@ BlackBoard::BlackBoard() {
 	strcpy(blackBoardWindow, "BlackBoard");
 	strcpy(webcamWindow, "Webcam");
 	//webcam initialization
-	webcam = cvCaptureFromCAM(0);
+	webcam = cvCaptureFromCAM(1);
 	//webcam=cvCreateCameraCapture(CV_CAP_ANY);
 	if (!webcam) {
 		cerr << "Create webcam capture failed\n";
@@ -36,11 +36,13 @@ BlackBoard::BlackBoard() {
 
 void BlackBoard::Init() {
 	//windows initialization
-	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE);
-	cvMoveWindow(blackBoardWindow, 328, 0);
-
 	cvNamedWindow(webcamWindow, CV_WINDOW_AUTOSIZE);
-	cvMoveWindow(webcamWindow, 0, 0);
+	cvMoveWindow(webcamWindow, 600, 0);
+	
+	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE);
+	//cvMoveWindow(blackBoardWindow, 328, 0);
+	cvMoveWindow(blackBoardWindow, 0, 0);
+
 	//cvSetWindowProperty("BlackBoard",CV_WND_PROP_FULLSCREEN,0);
 
 	calibrator->calibrate();

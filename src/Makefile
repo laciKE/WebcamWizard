@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -W -Wall -O2 -I/usr/include/opencv
 
-LIBS += -lcv -lhighgui -lcvaux -lml
+LIBS += -lcv -lhighgui -lcvaux -lml -lcxcore
 
 BIN = ../bin/
 

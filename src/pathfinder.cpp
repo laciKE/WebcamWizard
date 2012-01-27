@@ -2,6 +2,7 @@
 #include <opencv/highgui.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "pathfinder.hpp"
 #include "blackboard.hpp"
 
@@ -171,6 +172,10 @@ PathFinderMaxSquare::PathFinderMaxSquare(BlackBoard* bB):PathFinder(bB){
 			CV_CAP_PROP_FRAME_WIDTH);
 	int captureHeight = cvGetCaptureProperty(blackBoard->webcam,
 			CV_CAP_PROP_FRAME_HEIGHT);
+	if(!captureWidth){
+		captureWidth=640;
+		captureHeight=480;
+	}
 	//cerr << "capture resolution is " << captureWidth << "x" << captureHeight << endl;
 	maxSquare = (int**) malloc(sizeof(int*) * (captureHeight + 4));
 	for (int i = 0; i < captureHeight; i++)
@@ -219,8 +224,8 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop){
 	float line[4];
 	vector <CvPoint2D32f> points;
 
-	for (y = 1; y < H; y++)
-		for (x = 3; x < W; x += 3) {
+	for (y = min(blackBoard->calibrator->calibrationData.vertex[0].y,blackBoard->calibrator->calibrationData.vertex[1].y); y < max(blackBoard->calibrator->calibrationData.vertex[2].y,blackBoard->calibrator->calibrationData.vertex[3].y); y++)
+		for (x = 3*min(blackBoard->calibrator->calibrationData.vertex[0].x,blackBoard->calibrator->calibrationData.vertex[1].x); x < 3*max(blackBoard->calibrator->calibrationData.vertex[2].x,blackBoard->calibrator->calibrationData.vertex[3].x); x += 3) {
 			int R = (unsigned char) frame->imageData[y * W + x + 2];
 			int G = (unsigned char) frame->imageData[y * W + x + 1];
 			int B = (unsigned char) frame->imageData[y * W + x];
