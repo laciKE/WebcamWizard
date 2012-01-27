@@ -12,7 +12,7 @@ IplImage* img = 0;
 IplImage* img0 = 0;
 CvMemStorage* storage = 0;
 CvPoint *calib[4];
-
+/*
 //experimental fuction
 IplImage* Experiment(IplImage* img)
 {
@@ -36,7 +36,7 @@ IplImage* Experiment(IplImage* img)
 
     return ret;
 }
-
+*/
 
 double angle( CvPoint* pt1, CvPoint* pt2, CvPoint* pt0 )
 {
@@ -63,7 +63,6 @@ IplImage* DetectAndDrawQuads(IplImage* img)
     while(contours)
     {
         //cvDrawContours(ret, contours, CV_RGB( rand()&255, rand()&255, rand()&255 ), CV_RGB(0,0,0), -1, CV_FILLED, 8, cvPoint(0,0));
-        /*
         cvDrawContours(
 			ret,
 			contours,
@@ -101,7 +100,8 @@ IplImage* DetectAndDrawQuads(IplImage* img)
                 // area may be positive or negative - in accordance with the
                 // contour orientation
                 if( result->total == 4 &&
-                    cvContourArea(result,CV_WHOLE_SEQ,0) > 1000 &&
+                    //cvContourArea(result,CV_WHOLE_SEQ,0) > 1000 && //comment by laciKE because compilation error
+		    cvContourArea(result,CV_WHOLE_SEQ) > 1000 &&
                     cvCheckContourConvexity(result) )
                 {
                     s = 0;
@@ -223,7 +223,8 @@ CvSeq* findSquares4( IplImage* img, CvMemStorage* storage )
                 // area may be positive or negative - in accordance with the
                 // contour orientation
                 if( result->total == 4 &&
-                    cvContourArea(result,CV_WHOLE_SEQ,0) > 100 &&
+                    //cvContourArea(result,CV_WHOLE_SEQ,0) > 100 && //comment by laciKE because compilation error
+ 		    cvContourArea(result,CV_WHOLE_SEQ) > 100 &&
                     cvCheckContourConvexity(result) )
                 {
                     s = 0;
@@ -396,7 +397,6 @@ int Calibrator::calibrate() {
     //frame2_gray = cvCloneImage(frame2);
     cvShowImage(blackBoard->webcamWindow,frame2_diff);
     cvWaitKey(10000);
-    /*
     W = frame2_gray->widthStep;
 	H = frame2_gray->height;
     for (y = 0; y < H; y++){
@@ -450,18 +450,18 @@ int Calibrator::calibrate() {
     cvShowImage(blackBoard->blackBoardWindow, DetectAndDrawQuads(frame_bw));
     cvWaitKey(5000);
 	//TODO calibration
-    // manual calibration
-    for(int i=0; i<4; i++) {
-    calibrationData.vertex[i] = *calib[i];
+    // manual calibration //comment by laciKE because Segmentation Fault
+    //for(int i=0; i<4; i++) {
+    //calibrationData.vertex[i] = *calib[i];
     //cout << i << ": " << calibrationData.vertex[i] << endl;
-    }
-    /*
+    //}
+    
     // manual calibration
 	calibrationData.vertex[0] = cvPoint(90, 39);
 	calibrationData.vertex[1] = cvPoint(448, 46);
 	calibrationData.vertex[2] = cvPoint(480, 309);
 	calibrationData.vertex[3] = cvPoint(60, 308);
-    */
+    
 
 	cvReleaseImage(&desktop);
 	cvReleaseImage(&frame_gray);
