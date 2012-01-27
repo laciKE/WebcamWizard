@@ -20,15 +20,15 @@ APPLICATION STRUCTURE
 +-----------------+          | desktopHeight      |  .  | drawPath()      |
                              | setPathFinder()    |...  | Init()          |
                              | clear()            |     +-----------------+
-                             | update()           |          |
-                             +--------------------+          |
-                                                             | 
-                                                        +-----------------------+  +--------------------------+
-                                                        |class PathFinderAllRed |  |class PathFinderMaxSquare |
-                                                        +-----------------------+  +--------------------------+
-                                                        | drawPath()            |  | drawPath()               |
-                                                        | Init()                |  | Init()                   |
-                                                        +-----------------------+  +--------------------------+
+                             | update()           |          |       |   +-------------------------------------------+
+                             +--------------------+          |       +---------------+                               |
+                                                             |                       |                               |
+                                                        +-----------------------+  +--------------------------+ +------------------------+
+                                                        |class PathFinderAllRed |  |class PathFinderMaxSquare | |class PathFinderFitLine |
+                                                        +-----------------------+  +--------------------------+ +------------------------+
+                                                        | drawPath()            |  | drawPath()               | | drawPath()             |
+                                                        | Init()                |  | Init()                   | | Init()                 |
+                                                        +-----------------------+  +--------------------------+ +------------------------+
 
 
 BlackBoard contains a webcam capture and objects calibrator and desktopDrawer and manages windows for desktop vies and webcam view (webcam view is only for debuging now).
@@ -38,6 +38,7 @@ DesktopDrawer contains image of current desktop view of blackBoard and methods f
 PathFinder is Strategy design pattern for various methods of finding and drawing lightpen path in captured frames.
 PathFinderAllRed simply draw all red pixels from frame.
 PathFinderMaxSquare search for max red square (one per each frame), then draw line with endpoints in the centers of these squares.
+PathFinderFitLine fits lightpen pixels with line and connects their midpoints.
 
 Calibrator is for autocalibration desktopDrawer (calibrator show in desktop window image used in calibration proces).
 

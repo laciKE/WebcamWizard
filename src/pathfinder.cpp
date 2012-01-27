@@ -1,5 +1,6 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#include <iostream>
 #include "pathfinder.hpp"
 #include "blackboard.hpp"
 
@@ -59,9 +60,9 @@ inline bool PathFinder::isLightPen(int R, int G, int B) {
 }
 
 inline void PathFinder::drawPoint(CvPoint A, IplImage* img) {
-	img->imageData[A.y * img->widthStep + 3 * A.x + 2] = 0;
-	img->imageData[A.y * img->widthStep + 3 * A.x + 1] = 255;
-	img->imageData[A.y * img->widthStep + 3 * A.x + 0] = 255;
+	img->imageData[(int)(A.y * img->widthStep + 3 * A.x + 2)] = 0;
+	img->imageData[(int)(A.y * img->widthStep + 3 * A.x + 1)] = 255;
+	img->imageData[(int)(A.y * img->widthStep + 3 * A.x + 0)] = 255;
 }
 
 inline int sqr(int x) {
@@ -90,6 +91,7 @@ PathFinder::~PathFinder(){
 //Find and draw all red pixels from frame
 
 void PathFinderAllRed::Init() {
+	cerr << "PathFinderAllRed\n";
 }
 
 void PathFinderAllRed::drawPath(IplImage* frame, IplImage* desktop){
@@ -112,4 +114,144 @@ PathFinderAllRed::PathFinderAllRed(BlackBoard* bB):PathFinder(bB){
 }
 
 PathFinderAllRed::~PathFinderAllRed(){
+}
+
+
+
+//Find max lightpen square in frame and draw line with endpoints in center of two squares
+
+void PathFinderMaxSquare::Init() {
+	lastPoint.x = -1;
+	lastPoint.y = -1;
+	cerr << "PathFinderMaxSquare\n";
+}
+
+void PathFinderMaxSquare::drawPath(IplImage* frame, IplImage* desktop){
+	int W = frame->widthStep;
+	int H = frame->height;
+	int x, y;
+	for (y = 0; y < H; y++)
+		memset(maxSquare[y], 0, W / 3);
+
+	int maxX, maxY, maxVal;
+	maxX = maxY = maxVal = 0;
+	for (y = 1; y < H; y++)
+		for (x = 3; x < W; x += 3) {
+			int R = (unsigned char) frame->imageData[y * W + x + 2];
+			int G = (unsigned char) frame->imageData[y * W + x + 1];
+			int B = (unsigned char) frame->imageData[y * W + x];
+			if (isLightPen(R, G, B)) {
+				maxSquare[y][x/3]=min(maxSquare[y-1][x/3],min(maxSquare[y][x/3-1],maxSquare[y-1][x/3-1]))+1;
+				if(maxSquare[y][x/3]>maxVal){
+					maxVal=maxSquare[y][x/3];
+					maxX=x/3;
+					maxY=y;
+			 	}
+			} else
+				maxSquare[y][x / 3] = 0;
+		}
+	if(maxVal>1){
+		CvPoint pixel=getDesktopCoords(maxX-maxVal/2,maxY-maxVal/2);
+		if(lastPoint.x>0)
+			drawLine(lastPoint,pixel,desktop);
+		else
+			drawPoint(pixel,desktop);
+		lastPoint=pixel;
+//		cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
+	 } else {
+	 	lastPoint=cvPoint(-1,-1);
+//	 	cerr << "nemam pixel\n";
+	 }
+}
+
+PathFinderMaxSquare::PathFinderMaxSquare(BlackBoard* bB):PathFinder(bB){
+	//initialization array for finding maximal square of lightPen pixels
+	int captureWidth = cvGetCaptureProperty(blackBoard->webcam,
+			CV_CAP_PROP_FRAME_WIDTH);
+	int captureHeight = cvGetCaptureProperty(blackBoard->webcam,
+			CV_CAP_PROP_FRAME_HEIGHT);
+	//cerr << "capture resolution is " << captureWidth << "x" << captureHeight << endl;
+	maxSquare = (int**) malloc(sizeof(int*) * (captureHeight + 4));
+	for (int i = 0; i < captureHeight; i++)
+		maxSquare[i] = (int*) malloc(sizeof(int) * (captureWidth + 4));
+}
+
+PathFinderMaxSquare::~PathFinderMaxSquare(){
+	int captureHeight = cvGetCaptureProperty(blackBoard->webcam,
+			CV_CAP_PROP_FRAME_HEIGHT);
+	for (int i = 0; i < captureHeight; i++)
+		free(maxSquare[i]);
+	free(maxSquare);
+}
+
+
+
+//Fit lightpen pixels in frame with linea and draw it, connected to previous line, if possible
+
+void PathFinderFitLine::Init() {
+	lastPoint.x = -1;
+	lastPoint.y = -1;
+
+	cvClearSeq(point_seq);
+
+	cerr << "PathFinderFitLine\n";
+}
+/*
+	CvPoint2D32f points[10];
+	for(int i=0; i<10; i++){
+		points[i].x=points[i].y=i;
+	}
+	float line[4];
+	CvMemStorage* storage = cvCreateMemStorage(0);
+	CvSeq* point_seq = cvCreateSeq( CV_32FC2, sizeof(CvSeq), sizeof(CvPoint2D32f), storage );
+	for(int i=0; i<10; i++)
+		cvSeqPush(point_seq, &points[i]);
+	cvFitLine(point_seq,CV_DIST_L2,0,0.01,0.01,line);
+	for(int i=0; i<4; i++)
+		cerr << line[i] << endl;
+*/
+void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop){
+	int W = frame->widthStep;
+	int H = frame->height;
+	int x, y, numOfPoints=0;
+	cvClearSeq(point_seq);
+	float line[4];
+
+	for (y = 1; y < H; y++)
+		for (x = 3; x < W; x += 3) {
+			int R = (unsigned char) frame->imageData[y * W + x + 2];
+			int G = (unsigned char) frame->imageData[y * W + x + 1];
+			int B = (unsigned char) frame->imageData[y * W + x];
+			if (isLightPen(R, G, B)){
+				cvSeqPush(point_seq,&cvPoint2D32f(x/3,y));
+				numOfPoints++;
+			}
+		}
+
+	if(numOfPoints>3){
+		cvFitLine(point_seq,CV_DIST_L2,0,0.1,0.1,line);
+		//for(int i=0; i<4; i++)
+		//	cerr << line[i] << " ";
+
+		CvPoint pixel=getDesktopCoords(line[2],line[3]);
+		if(lastPoint.x>0)
+			drawLine(lastPoint,pixel,desktop);
+		else
+			drawPoint(pixel,desktop);
+		lastPoint=pixel;
+		//cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
+	 } else {
+	 	lastPoint=cvPoint(-1,-1);
+	 	//cerr << "nemam pixel\n";
+	}
+}
+
+PathFinderFitLine::PathFinderFitLine(BlackBoard* bB):PathFinder(bB){
+	storage = cvCreateMemStorage(0);
+	point_seq = cvCreateSeq( CV_32FC2, sizeof(CvSeq), sizeof(CvPoint2D32f), storage );
+}
+
+PathFinderFitLine::~PathFinderFitLine(){
+	cvClearSeq(point_seq);
+	cvReleaseMemStorage(&storage);
 }

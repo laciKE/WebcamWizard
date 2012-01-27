@@ -12,16 +12,44 @@ int main(int argc, char** argv) {
 	BlackBoard* blackBoard = new BlackBoard();
 	blackBoard->Init();
 	PathFinder* allRed = new PathFinderAllRed(blackBoard);
+	PathFinder* maxSquare = new PathFinderMaxSquare(blackBoard);
+	PathFinder* fitLine = new PathFinderFitLine(blackBoard);
+
 	blackBoard->desktopDrawer->setPathFinder(allRed);
+
+	cout << "Ovladanie:\n";
+	cout << "ESC     quit\n";
+	cout << "c       clear desktop\n";
+	cout << "1       PathFinderAllRed\n";
+	cout << "2       PathFinderMaxSquare\n";
+	cout << "3       PathFinderFitLine\n";
+
 	//update desktop view
-	while (blackBoard->update()) {
+	bool run = 1;
+	while (blackBoard->update() && run) {
 		char c = cvWaitKey(33);
-		if (c == 27)
-			break; //ESC
-		if (c == 'c')
-			blackBoard->desktopDrawer->clear();
+		switch(c){
+			case 27:
+				run = 0;
+				break; //ESC
+			case 'c':
+				blackBoard->desktopDrawer->clear();
+				break;
+			case '1':
+				blackBoard->desktopDrawer->setPathFinder(allRed);
+				break;
+			case '2':
+				blackBoard->desktopDrawer->setPathFinder(maxSquare);
+				break;
+			case '3':
+				blackBoard->desktopDrawer->setPathFinder(fitLine);
+				break;
+		}
 	}
 	delete blackBoard;
+	delete allRed;
+	delete maxSquare;
+	delete fitLine;
 
 	return 0;
 }

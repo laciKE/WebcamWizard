@@ -457,10 +457,10 @@ int Calibrator::calibrate() {
     //}
     
     // manual calibration
-	calibrationData.vertex[0] = cvPoint(90, 39);
-	calibrationData.vertex[1] = cvPoint(448, 46);
-	calibrationData.vertex[2] = cvPoint(480, 309);
-	calibrationData.vertex[3] = cvPoint(60, 308);
+	calibrationData.vertex[0] = cvPoint(40, 40);
+	calibrationData.vertex[1] = cvPoint(600, 40);
+	calibrationData.vertex[2] = cvPoint(600, 440);
+	calibrationData.vertex[3] = cvPoint(40, 440);
     
 
 	cvReleaseImage(&desktop);

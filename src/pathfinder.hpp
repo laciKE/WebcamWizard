@@ -33,5 +33,28 @@ public:
 	~PathFinderAllRed();
 };
 
+class PathFinderMaxSquare: public PathFinder {
+private:
+	int** maxSquare;
+	CvPoint lastPoint;	
+public:
+	void Init();
+	void drawPath(IplImage* frame, IplImage* desktop);
+	PathFinderMaxSquare(BlackBoard* bB);
+	~PathFinderMaxSquare();
+};
+
+class PathFinderFitLine: public PathFinder {
+private:
+	CvMemStorage* storage;
+	CvSeq* point_seq;
+	CvPoint lastPoint;	
+public:
+	void Init();
+	void drawPath(IplImage* frame, IplImage* desktop);
+	PathFinderFitLine(BlackBoard* bB);
+	~PathFinderFitLine();
+};
+
 
 #endif
