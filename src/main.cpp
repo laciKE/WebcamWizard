@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char** argv) {
 	//initialization and calibration of new blackBoard
 	BlackBoard* blackBoard = new BlackBoard();
-	blackBoard->Init();
+	blackBoard->init();
 	PathFinder* allRed = new PathFinderAllRed(blackBoard);
 	PathFinder* maxSquare = new PathFinderMaxSquare(blackBoard);
 	PathFinder* fitLine = new PathFinderFitLine(blackBoard);

@@ -49,7 +49,9 @@ void DesktopDrawer::clear() {
 
 DesktopDrawer::DesktopDrawer(BlackBoard* parent) {
 	blackBoard = parent;
-	desktop = cvCreateImage(cvSize(desktopWidth, desktopHeight), IPL_DEPTH_8U,3);
+	desktopWidth = parent->blackBoardWidth;
+	desktopHeight = parent->blackBoardHeight;
+	desktop = parent->blackBoardImage;
 
 	clear();
 

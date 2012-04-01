@@ -12,8 +12,8 @@ private:
 	class PathFinder* pathFinder;
 	IplImage* desktop;
 public:
-	static const int desktopWidth=800;
-        static const int desktopHeight=600;
+	static const int desktopWidth;
+        static const int desktopHeight;
 	int update();
 	void clear();
 	void setPathFinder(PathFinder* pF);
