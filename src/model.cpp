@@ -2,25 +2,42 @@
 #include <opencv/highgui.h>
 #include <iostream>
 #include <cstring>
-#include "blackboard.hpp"
+#include "model.hpp"
 
 using namespace std;
 
-int BlackBoard::update() {
+int Model::update() {
 	return desktopDrawer->update();
 }
 
-BlackBoard::~BlackBoard() {
+void Model::setTool(){
+
+}
+
+void Model::clear(){
+	desktopDrawer->clear();
+}
+
+IplImage* Model::getBlackBoardImage(){
+	return cvCloneImage(blackBoardImage);
+}
+
+void Model::setBlackBoardImage(IplImage *img ){
+	cvReleaseImage(&blackBoardImage);
+	blackBoardImage = cvCloneImage(img);
+}
+
+Model::~Model() {
 	delete calibrator;
 	delete desktopDrawer;
 	cvReleaseCapture(&webcam);
-	cvDestroyWindow( blackBoardWindow);
-	cvDestroyWindow( webcamWindow);
+	cvDestroyWindow(blackBoardWindow);
+	cvDestroyWindow(webcamWindow);
 }
 
-BlackBoard::BlackBoard() {
+Model::Model() {
 	//window names initialization
-	strcpy(blackBoardWindow, "BlackBoard");
+	strcpy(blackBoardWindow, "Model");
 	strcpy(webcamWindow, "Webcam");
 	//webcam initialization
 	webcam = cvCaptureFromCAM(0);
@@ -29,12 +46,13 @@ BlackBoard::BlackBoard() {
 		cerr << "Create webcam capture failed\n";
 		exit(1);
 	}
+	blackBoardImage = cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U,3);
 	//private variables initialization
 	desktopDrawer = new DesktopDrawer(this);
 	calibrator = new Calibrator(this);
 }
 
-void BlackBoard::Init() {
+void Model::init() {
 	//windows initialization
 	cvNamedWindow(webcamWindow, CV_WINDOW_AUTOSIZE);
 	cvMoveWindow(webcamWindow, 600, 0);
@@ -43,7 +61,7 @@ void BlackBoard::Init() {
 	//cvMoveWindow(blackBoardWindow, 328, 0);
 	cvMoveWindow(blackBoardWindow, 0, 0);
 
-	//cvSetWindowProperty("BlackBoard",CV_WND_PROP_FULLSCREEN,0);
+	//cvSetWindowProperty("Model",CV_WND_PROP_FULLSCREEN,0);
 
 	calibrator->calibrate();
 }
