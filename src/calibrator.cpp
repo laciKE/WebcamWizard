@@ -105,7 +105,7 @@ IplImage* DetectAndDrawQuads(IplImage* img)
 int Calibrator::calibrate()
 {
     IplImage* desktop = cvCreateImage(cvSize(
-                                          model->blackBoardWidth
+                                          model->blackBoardWidth,
                                           model->blackBoardHeight), IPL_DEPTH_8U, 3);
 
     //cerr << "calibration start" << endl;
@@ -151,7 +151,7 @@ int Calibrator::calibrate()
 
     //show frame_bw
 
-    
+
     //cvShowImage(blackBoard->webcamWindow,frame_bw);
     //cerr << "frame" << endl;
 
