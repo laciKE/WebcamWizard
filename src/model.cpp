@@ -25,6 +25,7 @@ IplImage* Model::getBlackBoardImage(){
 void Model::setBlackBoardImage(IplImage *img ){
 	cvReleaseImage(&blackBoardImage);
 	blackBoardImage = cvCloneImage(img);
+	view->refresh();
 }
 
 Model::~Model() {
@@ -35,7 +36,8 @@ Model::~Model() {
 	cvDestroyWindow(webcamWindow);
 }
 
-Model::Model() {
+Model::Model(View *parent) {
+	view = parent;
 	//window names initialization
 	strcpy(blackBoardWindow, "Model");
 	strcpy(webcamWindow, "Webcam");
@@ -63,5 +65,9 @@ void Model::init() {
 
 	//cvSetWindowProperty("Model",CV_WND_PROP_FULLSCREEN,0);
 
-	calibrator->calibrate();
+	//calibrator->calibrate();
+}
+
+int Model::calibrate(){
+	return calibrator->calibrate();
 }

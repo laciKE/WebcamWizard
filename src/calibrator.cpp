@@ -2,7 +2,7 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <iostream>
-#include "blackboard.hpp"
+#include "model.hpp"
 #include "calibrator.hpp"
 
 using namespace std;
@@ -105,10 +105,10 @@ IplImage* DetectAndDrawQuads(IplImage* img)
 int Calibrator::calibrate()
 {
     IplImage* desktop = cvCreateImage(cvSize(
-                                          blackBoard->desktopDrawer->desktopWidth,
-                                          blackBoard->desktopDrawer->desktopHeight), IPL_DEPTH_8U, 3);
+                                          model->blackBoardWidth
+                                          model->blackBoardHeight), IPL_DEPTH_8U, 3);
 
-    cerr << "calibration start" << endl;
+    //cerr << "calibration start" << endl;
     //show white screen for autocalibration
     int W = desktop->widthStep;
     int H = desktop->height;
@@ -120,18 +120,19 @@ int Calibrator::calibrate()
             desktop->imageData[y * W + x] = 255;
         }
 
-    cvShowImage(blackBoard->blackBoardWindow, desktop);
+    model->setBlackBoardImage(desktop);
+    //cvShowImage(blackBoard->blackBoardWindow, desktop);
 
     //wait 250ms
     cvWaitKey(250);
 
     //capture frame from webcam
-    IplImage* frame = cvQueryFrame(blackBoard->webcam);
+    IplImage* frame = cvQueryFrame(model->webcam);
 
     // some times frames for initializing webcam(problem with modern webcam)
     for (int i=0; i<30; i++)
     {
-        frame = cvQueryFrame(blackBoard->webcam);
+        frame = cvQueryFrame(model->webcam);
         if (!frame)
             return 0;
     }
@@ -149,21 +150,23 @@ int Calibrator::calibrate()
     cvThreshold(frame_gray, frame_bw, 128, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
 
     //show frame_bw
-    cvShowImage(blackBoard->webcamWindow,frame_bw);
-    cerr << "frame" << endl;
 
-    // wait 5s
-    cvWaitKey(5000);
+    
+    //cvShowImage(blackBoard->webcamWindow,frame_bw);
+    //cerr << "frame" << endl;
+
+    // wait 1s
+    cvWaitKey(1000);
 
     // function DetectAntDrawQuads need storage
     // init storage
     storage = cvCreateMemStorage(0);
 
     // show frame with rectangle
-    cvShowImage(blackBoard->blackBoardWindow, DetectAndDrawQuads(frame_bw));
-
-    // wait 5s
-    cvWaitKey(5000);
+    //cvShowImage(blackBoard->blackBoardWindow, DetectAndDrawQuads(frame_bw));
+    model->setBlackBoardImage(DetectAndDrawQuads(frame_bw));
+    // wait 2s
+    cvWaitKey(2000);
 
     // fixed problem with sequence of calib
     int minxy=500600;
@@ -218,9 +221,9 @@ int Calibrator::calibrate()
     }
 }
 
-Calibrator::Calibrator(BlackBoard* parent)
+Calibrator::Calibrator(Model* parent)
 {
-    blackBoard = parent;
+    model = parent;
 }
 
 Calibrator::~Calibrator()

@@ -9,23 +9,25 @@
 class Model {
 private:
 	IplImage* blackBoardImage;
+	Calibrator* calibrator;
+	DesktopDrawer* desktopDrawer;
+	View *view;
 
 public:
 	static const int blackBoardWidth = 800;
 	static const int blackBoardHeight = 600;
 	CvCapture* webcam;
-	Calibrator* calibrator;
-	DesktopDrawer* desktopDrawer;
 	int update();
 	//actions on model
 	void setTool();
 	void clear();
+	int calibrate();
 	
 	IplImage* getBlackBoardImage();
 	void setBlackBoardImage(IplImage* img);
 	char blackBoardWindow[64], webcamWindow[64];
 	void init();
-	Model();
+	Model(View *parent);
 	~Model();
 };
 

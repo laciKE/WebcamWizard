@@ -3,7 +3,7 @@
 
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
-#include "blackboard.hpp"
+#include "model.hpp"
 
 typedef struct {
 	CvPoint vertex[4];
@@ -11,12 +11,12 @@ typedef struct {
 
 class Calibrator {
 private:
-	class BlackBoard* blackBoard;
+	class Model* model;
 
 public:
 	//coordinates of blackboard's corners in webcam
 	CalibrationData calibrationData;
-	Calibrator(BlackBoard* parent);
+	Calibrator(Model* parent);
 	~Calibrator();
 	int calibrate();
 };
