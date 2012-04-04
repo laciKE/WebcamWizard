@@ -17,5 +17,5 @@ $(BIN)pathfinder.o: pathfinder.cpp pathfinder.hpp model.hpp
 	$(CC) $(CFLAGS) -c -o $(BIN)pathfinder.o pathfinder.cpp
 #$(BIN)pathfinder_all_red.o: pathfinder_all_red.cpp pathfinder_all_red.hpp pathfinder.cpp pathfinder.hpp
 #	$(CC) $(CFLAGS) -c -o $(BIN)pathfinder_all_red.o pathfinder_all_red.cpp
-$(BIN)main.o: main_testing.cpp model.hpp pathfinder.hpp
-	$(CC) $(CFLAGS) -c -o $(BIN)main.o main_testing.cpp
+$(BIN)main.o: main.cpp model.hpp pathfinder.hpp
+	$(CC) $(CFLAGS) -c -o $(BIN)main.o main.cpp
