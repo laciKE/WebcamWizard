@@ -4,30 +4,35 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include "calibrator.hpp"
-#include "desktopdrawer.hpp"
+#include "pathfinder.hpp"
+//#include "view.hpp"
 
 class Model {
 private:
-	IplImage* blackBoardImage;
-	Calibrator* calibrator;
-	DesktopDrawer* desktopDrawer;
-	View *view;
+	IplImage *blackBoardImage;
+	IplImage *webcamImage;
+	class Calibrator *calibrator;
+//	View *view;
+	class PathFinder *pathFinder;
 
 public:
 	static const int blackBoardWidth = 800;
 	static const int blackBoardHeight = 600;
-	CvCapture* webcam;
+	CvCapture *webcam;
 	int update();
 	//actions on model
 	void setTool();
+	void setPathFinder(PathFinder *pF);
 	void clear();
 	int calibrate();
 	
-	IplImage* getBlackBoardImage();
-	void setBlackBoardImage(IplImage* img);
+	IplImage *getBlackBoardImage();
+	IplImage *getWebcamImage();
+	void setBlackBoardImage(IplImage *img);
 	char blackBoardWindow[64], webcamWindow[64];
-	void init();
-	Model(View *parent);
+	void Init();
+	//Model(View *parent);
+	Model();
 	~Model();
 };
 
