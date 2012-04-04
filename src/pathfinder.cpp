@@ -59,6 +59,7 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 
 inline bool PathFinder::isLightPen(int R, int G, int B) {
 	return ((R > 220) && (R > (G + B) * 2 / 3));
+	//return ((B > 220) && (B > (G + R) * 2 / 3));
 }
 
 inline void PathFinder::drawPoint(CvPoint A, IplImage* img) {

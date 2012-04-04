@@ -91,7 +91,7 @@ Model::Model(/*View *parent*/) {
 		exit(1);
 	}
 
-	IplImage* webcamImage = cvCreateImage(cvSize(320, 240), frame->depth,
+	webcamImage = cvCreateImage(cvSize(320, 240), frame->depth,
 			frame->nChannels);
 
 
@@ -117,5 +117,7 @@ void Model::Init() {
 }
 
 int Model::calibrate(){
-	return calibrator->calibrate();
+	int result = calibrator->calibrate();
+	clear();
+	return result;
 }

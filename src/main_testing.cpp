@@ -11,6 +11,7 @@ int main(int argc, char** argv) {
 	//initialization and calibration of new blackBoard
 	Model *blackBoard = new Model();
 	blackBoard->Init();
+	blackBoard->calibrate();
 	PathFinder* allRed = new PathFinderAllRed(blackBoard);
 	PathFinder* maxSquare = new PathFinderMaxSquare(blackBoard);
 	PathFinder* fitLine = new PathFinderFitLine(blackBoard);

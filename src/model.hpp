@@ -11,11 +11,11 @@ class Model {
 private:
 	IplImage *blackBoardImage;
 	IplImage *webcamImage;
-	class Calibrator *calibrator;
 //	View *view;
 	class PathFinder *pathFinder;
 
 public:
+	class Calibrator *calibrator; //TODO getCalibrationData
 	static const int blackBoardWidth = 800;
 	static const int blackBoardHeight = 600;
 	CvCapture *webcam;

@@ -105,7 +105,7 @@ IplImage* DetectAndDrawQuads(IplImage* img)
 int Calibrator::calibrate()
 {
     IplImage* desktop = cvCreateImage(cvSize(
-                                          model->blackBoardWidth
+                                          model->blackBoardWidth,
                                           model->blackBoardHeight), IPL_DEPTH_8U, 3);
 
     //cerr << "calibration start" << endl;
@@ -207,10 +207,10 @@ int Calibrator::calibrate()
     if (test==false)
     {
         // manual calibration for testing purpose
-        calibrationData.vertex[0] = cvPoint(40, 40);
-        calibrationData.vertex[1] = cvPoint(600, 40);
-        calibrationData.vertex[2] = cvPoint(600, 440);
-        calibrationData.vertex[3] = cvPoint(40, 440);
+        calibrationData.vertex[0] = cvPoint(0, 0);
+        calibrationData.vertex[1] = cvPoint(640, 0);
+        calibrationData.vertex[2] = cvPoint(640, 480);
+        calibrationData.vertex[3] = cvPoint(0, 480);
         cerr << "Calibration failed. Calibration is on manual mod."<< endl;
         return 0;
     }

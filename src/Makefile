@@ -1,7 +1,7 @@
 CC = g++
-CFLAGS = -W -Wall -O2 -I/usr/include/opencv
+CFLAGS = -W -Wall -O2 $(shell pkg-config --cflags opencv)
 
-LIBS += -lcv -lhighgui -lcvaux -lml -lcxcore
+LIBS += $(shell pkg-config --libs opencv)
 
 BIN = ../bin/
 
