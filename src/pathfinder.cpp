@@ -4,13 +4,13 @@
 #include <vector>
 #include <algorithm>
 #include "pathfinder.hpp"
-#include "blackboard.hpp"
+#include "model.hpp"
 
 using namespace std;
 
 CvPoint PathFinder::getDesktopCoords(int x, int y) {
 	//binary search coordinates of webcam point (x,y) in rectangle in blackBoard->calibrator->calibrationData
-	CalibrationData calibrationData = blackBoard->calibrator->calibrationData;
+	CalibrationData calibrationData = model->calibrator->calibrationData;
 	const double epsilon = 0.005;
 	double l, r, p;
 	CvPoint A, B, C = cvPoint(x, y);
@@ -33,7 +33,7 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 		else
 			l = p;
 	}
-	result.x = blackBoard->desktopDrawer->desktopWidth * l;
+	result.x = model->blackBoardWidth * l;
 	//y coordinate
 	l = 0;
 	r = 1;
@@ -52,13 +52,14 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 		else
 			l = p;
 	}
-	result.y = blackBoard->desktopDrawer->desktopHeight * (1 - l);
+	result.y = model->blackBoardHeight * (1 - l);
 	//cerr << "input: [" << C.x << ", " << C.y << "]  output: [" << result.x << ", " << result.y << "]\n";
 	return result;
 }
 
 inline bool PathFinder::isLightPen(int R, int G, int B) {
 	return ((R > 220) && (R > (G + B) * 2 / 3));
+	//return ((B > 220) && (B > (G + R) * 2 / 3));
 }
 
 inline void PathFinder::drawPoint(CvPoint A, IplImage* img) {
@@ -79,8 +80,8 @@ void PathFinder::drawLine(CvPoint A, CvPoint B, IplImage* img) {
 
 }
 
-PathFinder::PathFinder(BlackBoard* bB){
-	blackBoard = bB;
+PathFinder::PathFinder(Model *m){
+	model = m;
 }
 
 PathFinder::~PathFinder(){
@@ -112,7 +113,7 @@ void PathFinderAllRed::drawPath(IplImage* frame, IplImage* desktop){
 		}
 }
 
-PathFinderAllRed::PathFinderAllRed(BlackBoard* bB):PathFinder(bB){
+PathFinderAllRed::PathFinderAllRed(Model *m):PathFinder(m){
 }
 
 PathFinderAllRed::~PathFinderAllRed(){
@@ -166,11 +167,11 @@ void PathFinderMaxSquare::drawPath(IplImage* frame, IplImage* desktop){
 	 }
 }
 
-PathFinderMaxSquare::PathFinderMaxSquare(BlackBoard* bB):PathFinder(bB){
+PathFinderMaxSquare::PathFinderMaxSquare(Model *m):PathFinder(m){
 	//initialization array for finding maximal square of lightPen pixels
-	int captureWidth = cvGetCaptureProperty(blackBoard->webcam,
+	int captureWidth = cvGetCaptureProperty(model->webcam,
 			CV_CAP_PROP_FRAME_WIDTH);
-	int captureHeight = cvGetCaptureProperty(blackBoard->webcam,
+	int captureHeight = cvGetCaptureProperty(model->webcam,
 			CV_CAP_PROP_FRAME_HEIGHT);
 	if(!captureWidth){
 		captureWidth=640;
@@ -183,7 +184,7 @@ PathFinderMaxSquare::PathFinderMaxSquare(BlackBoard* bB):PathFinder(bB){
 }
 
 PathFinderMaxSquare::~PathFinderMaxSquare(){
-	int captureHeight = cvGetCaptureProperty(blackBoard->webcam,
+	int captureHeight = cvGetCaptureProperty(model->webcam,
 			CV_CAP_PROP_FRAME_HEIGHT);
 	for (int i = 0; i < captureHeight; i++)
 		free(maxSquare[i]);
@@ -224,8 +225,8 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop){
 	float line[4];
 	vector <CvPoint2D32f> points;
 
-	for (y = min(blackBoard->calibrator->calibrationData.vertex[0].y,blackBoard->calibrator->calibrationData.vertex[1].y); y < max(blackBoard->calibrator->calibrationData.vertex[2].y,blackBoard->calibrator->calibrationData.vertex[3].y); y++)
-		for (x = 3*min(blackBoard->calibrator->calibrationData.vertex[0].x,blackBoard->calibrator->calibrationData.vertex[1].x); x < 3*max(blackBoard->calibrator->calibrationData.vertex[2].x,blackBoard->calibrator->calibrationData.vertex[3].x); x += 3) {
+	for (y = min(model->calibrator->calibrationData.vertex[0].y,model->calibrator->calibrationData.vertex[1].y); y < max(model->calibrator->calibrationData.vertex[2].y,model->calibrator->calibrationData.vertex[3].y); y++)
+		for (x = 3*min(model->calibrator->calibrationData.vertex[0].x,model->calibrator->calibrationData.vertex[1].x); x < 3*max(model->calibrator->calibrationData.vertex[2].x,model->calibrator->calibrationData.vertex[3].x); x += 3) {
 			int R = (unsigned char) frame->imageData[y * W + x + 2];
 			int G = (unsigned char) frame->imageData[y * W + x + 1];
 			int B = (unsigned char) frame->imageData[y * W + x];
@@ -253,7 +254,7 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop){
 	}
 }
 
-PathFinderFitLine::PathFinderFitLine(BlackBoard* bB):PathFinder(bB){
+PathFinderFitLine::PathFinderFitLine(Model *m):PathFinder(m){
 	storage = cvCreateMemStorage(0);
 	point_seq = cvCreateSeq( CV_32FC2, sizeof(CvSeq), sizeof(CvPoint2D32f), storage );
 }

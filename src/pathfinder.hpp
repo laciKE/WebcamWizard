@@ -7,19 +7,19 @@
 
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
-#include "blackboard.hpp"
+#include "model.hpp"
 
 class PathFinder {
 protected:
 	CvPoint getDesktopCoords(int x, int y);
-	BlackBoard* blackBoard;
+	Model *model;
 	bool isLightPen(int R, int G, int B);
 	void drawPoint(CvPoint A, IplImage* img);
 	void drawLine(CvPoint A, CvPoint B, IplImage* img);
 public:
 	virtual void Init(){};
 	virtual void drawPath(IplImage* frame, IplImage* desktop){};
-	PathFinder(BlackBoard* bB);
+	PathFinder(Model *m);
 	~PathFinder();
 };
 
@@ -29,7 +29,7 @@ private:
 public:
 	void Init();
 	void drawPath(IplImage* frame, IplImage* desktop);
-	PathFinderAllRed(BlackBoard* bB);
+	PathFinderAllRed(Model *m);
 	~PathFinderAllRed();
 };
 
@@ -40,7 +40,7 @@ private:
 public:
 	void Init();
 	void drawPath(IplImage* frame, IplImage* desktop);
-	PathFinderMaxSquare(BlackBoard* bB);
+	PathFinderMaxSquare(Model *m);
 	~PathFinderMaxSquare();
 };
 
@@ -52,7 +52,7 @@ private:
 public:
 	void Init();
 	void drawPath(IplImage* frame, IplImage* desktop);
-	PathFinderFitLine(BlackBoard* bB);
+	PathFinderFitLine(Model *m);
 	~PathFinderFitLine();
 };
 

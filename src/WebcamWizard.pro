@@ -5,15 +5,17 @@
 TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
-LIBS += -I/usr/include/opencv -lcv -lhighgui -lcvaux -lml -lcxcore
-INCLUDEPATH += -I/usr/include/opencv .
+LIBS += $(shell pkg-config --libs opencv)
+INCLUDEPATH += $(shell pkg-config --cflags opencv) .
 
 # Input
 FORMS += webcamWizard.ui
 HEADERS += \
     model.hpp \
     view.hpp \
-    calibrator.hpp
+    calibrator.hpp \
+    pathfinder.hpp
 SOURCES += view.cpp main.cpp \
     calibrator.cpp \
-    model.cpp
+    model.cpp \
+    pathfinder.cpp

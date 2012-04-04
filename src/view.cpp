@@ -1,8 +1,10 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#include <iostream>
 #include <QtGui> 
 #include "view.hpp"
 #include "model.hpp"
+#include "pathfinder.hpp"
 
 // if we include <QtGui> there is no need to include every class used: <QString>, <QFileDialog>,...
 
@@ -52,7 +54,7 @@ View::View(QWidget *parent)
 {
 	setupUi(this); // this sets up GUI
         model = new Model(this);
-        model->init();
+        model->Init();
 
 }
 
@@ -66,4 +68,21 @@ this->label->setPixmap(QPixmap::fromImage(*qimg));
 void View::on_pushButton_clicked()
 {
     model->calibrate();
+    /*docasne kod kvoli testovaniu */
+    //TODO spravit casovac na update
+    PathFinder *pH = new PathFinderFitLine(model);
+    model->setPathFinder(pH);
+    std::cerr << " chcem bezat\n";
+    bool run = 1;
+    while (model->update() && run) {
+	    refresh();
+	char c = cvWaitKey(33);
+	std::cerr << "bezim\n";
+	switch(c){
+		case 27:
+			run = 0;
+			break; //ESC
+	}
+    }
+    delete pH;
 }
