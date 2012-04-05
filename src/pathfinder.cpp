@@ -34,6 +34,7 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 			l = p;
 	}
 	result.x = model->blackBoardWidth * l;
+	//cerr << l << " ";
 	//y coordinate
 	l = 0;
 	r = 1;
@@ -53,6 +54,7 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 			l = p;
 	}
 	result.y = model->blackBoardHeight * (1 - l);
+	//cerr << 1-l << endl;
 	//cerr << "input: [" << C.x << ", " << C.y << "]  output: [" << result.x << ", " << result.y << "]\n";
 	return result;
 }

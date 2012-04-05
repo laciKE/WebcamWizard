@@ -24,7 +24,7 @@ double angle( CvPoint* pt1, CvPoint* pt2, CvPoint* pt0 )
 
 // function from examples opencv (squares.c)
 
-IplImage* DetectAndDrawQuads(IplImage* img)
+IplImage* Calibrator::DetectAndDrawQuads(IplImage* img)
 {
     CvSeq* contours;
     CvSeq* result;
@@ -94,9 +94,12 @@ IplImage* DetectAndDrawQuads(IplImage* img)
         contours = contours->h_next;
     }
 
-    cvReleaseMemStorage(&storage);
 
-    return ret;
+    cvReleaseMemStorage(&storage);
+    IplImage *resizedRet = cvCreateImage(cvSize(model->blackBoardWidth, model->blackBoardHeight),8,1);
+    cvResize(ret,resizedRet);
+    cvReleaseImage(&ret);
+    return resizedRet;
 }
 
 //calibration of desktop

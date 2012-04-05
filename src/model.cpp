@@ -51,9 +51,13 @@ IplImage* Model::getWebcamImage(){
 }
 
 void Model::setBlackBoardImage(IplImage *img ){
-        cvReleaseImage(&blackBoardImage);
-        blackBoardImage = cvCloneImage(img);
-        view->refresh();
+	if((img->width != blackBoardWidth) || (img->height != blackBoardHeight)){
+		cerr << "bad image size in model::setBlackBoardImage(IplImage *img)\n";
+		return;
+	}
+	cvReleaseImage(&blackBoardImage);
+	blackBoardImage = cvCloneImage(img);
+	view->refresh();
 }
 
 void Model::setPathFinder(class PathFinder* pF){
@@ -117,6 +121,7 @@ void Model::Init() {
 
 int Model::calibrate(){
 	int result = calibrator->calibrate();
+	setBlackBoardImage(cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U,3));
 	clear();
 	return result;
 }

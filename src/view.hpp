@@ -1,6 +1,6 @@
 #ifndef VIEW_HPP
 #define VIEW_HPP
- 
+
 #include "ui_webcamWizard.h"
 #include "model.hpp"
  
@@ -19,6 +19,5 @@ class View : public QWidget, private Ui::Form
 private slots:
                 void on_pushButton_clicked();
 };
- 
  
 #endif

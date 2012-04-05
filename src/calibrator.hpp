@@ -11,7 +11,8 @@ typedef struct {
 
 class Calibrator {
 private:
-        class Model* model;
+	class Model* model;
+	IplImage* DetectAndDrawQuads(IplImage* img);
 
 public:
         //coordinates of blackboard's corners in webcam
