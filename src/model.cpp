@@ -25,11 +25,11 @@ int Model::update() {
 	return 1;
 }
 
-void Model::setTool(){
+void Model::setTool() {
 
 }
 
-void Model::clear(){
+void Model::clear() {
 	int W = blackBoardImage->widthStep;
 	int H = blackBoardImage->height;
 	int x, y;
@@ -41,16 +41,16 @@ void Model::clear(){
 		}
 }
 
-IplImage* Model::getBlackBoardImage(){
+IplImage* Model::getBlackBoardImage() {
 	return cvCloneImage(blackBoardImage);
 }
 
-IplImage* Model::getWebcamImage(){
+IplImage* Model::getWebcamImage() {
 	return cvCloneImage(webcamImage);
 }
 
-void Model::setBlackBoardImage(IplImage *img ){
-	if((img->width != blackBoardWidth) || (img->height != blackBoardHeight)){
+void Model::setBlackBoardImage(IplImage *img) {
+	if ((img->width != blackBoardWidth) || (img->height != blackBoardHeight)) {
 		cerr << "bad image size in model::setBlackBoardImage(IplImage *img)\n";
 		return;
 	}
@@ -59,7 +59,7 @@ void Model::setBlackBoardImage(IplImage *img ){
 	view->refresh();
 }
 
-void Model::setPathFinder(class PathFinder* pF){
+void Model::setPathFinder(class PathFinder* pF) {
 	pathFinder = pF;
 	pathFinder->Init();
 }
@@ -70,8 +70,8 @@ Model::~Model() {
 	cvReleaseCapture(&webcam);
 	cvReleaseImage(&blackBoardImage);
 	cvReleaseImage(&webcamImage);
-	cvDestroyWindow(blackBoardWindow);
-	cvDestroyWindow(webcamWindow);
+	cvDestroyWindow( blackBoardWindow);
+	cvDestroyWindow( webcamWindow);
 }
 
 Model::Model(View *parent) {
@@ -86,7 +86,8 @@ Model::Model(View *parent) {
 		cerr << "Create webcam capture failed\n";
 		exit(1);
 	}
-	blackBoardImage = cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U,3);
+	blackBoardImage = cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight),
+			IPL_DEPTH_8U, 3);
 
 	//create webcamImage
 	IplImage *frame = cvQueryFrame(webcam);
@@ -98,7 +99,6 @@ Model::Model(View *parent) {
 	webcamImage = cvCreateImage(cvSize(320, 240), frame->depth,
 			frame->nChannels);
 
-
 	//private variables initialization
 	//desktopDrawer = new DesktopDrawer(this);
 	calibrator = new Calibrator(this);
@@ -108,7 +108,7 @@ void Model::Init() {
 	//windows initialization
 	cvNamedWindow(webcamWindow, CV_WINDOW_AUTOSIZE);
 	cvMoveWindow(webcamWindow, 600, 0);
-	
+
 	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE);
 	//cvMoveWindow(blackBoardWindow, 328, 0);
 	cvMoveWindow(blackBoardWindow, 0, 0);
@@ -120,9 +120,10 @@ void Model::Init() {
 	//calibrator->calibrate();
 }
 
-int Model::calibrate(){
+int Model::calibrate() {
 	int result = calibrator->calibrate();
-	setBlackBoardImage(cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U,3));
+	setBlackBoardImage(cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight),
+			IPL_DEPTH_8U, 3));
 	clear();
 	return result;
 }

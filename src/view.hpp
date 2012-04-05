@@ -3,9 +3,9 @@
 
 //View stub for testing branch 
 //(testing model features without Qt GUI)
-class View{
-	public:
-		void refresh();
+class View {
+public:
+	void refresh();
 };
 
 #endif

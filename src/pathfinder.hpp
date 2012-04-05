@@ -1,6 +1,6 @@
 /*
-	Strategy design pattern for finding path of red curve in captured frames
-*/
+ Strategy design pattern for finding path of red curve in captured frames
+ */
 
 #ifndef PATHFINDER_HPP
 #define PATHFINDER_HPP
@@ -17,12 +17,15 @@ protected:
 	void drawPoint(CvPoint A, IplImage* img);
 	void drawLine(CvPoint A, CvPoint B, IplImage* img);
 public:
-	virtual void Init(){};
-	virtual void drawPath(IplImage* frame, IplImage* desktop){};
+	virtual void Init() {
+	}
+	;
+	virtual void drawPath(IplImage* frame, IplImage* desktop) {
+	}
+	;
 	PathFinder(Model *m);
 	~PathFinder();
 };
-
 
 class PathFinderAllRed: public PathFinder {
 private:
@@ -36,7 +39,7 @@ public:
 class PathFinderMaxSquare: public PathFinder {
 private:
 	int** maxSquare;
-	CvPoint lastPoint;	
+	CvPoint lastPoint;
 public:
 	void Init();
 	void drawPath(IplImage* frame, IplImage* desktop);
@@ -48,13 +51,12 @@ class PathFinderFitLine: public PathFinder {
 private:
 	CvMemStorage* storage;
 	CvSeq* point_seq;
-	CvPoint lastPoint;	
+	CvPoint lastPoint;
 public:
 	void Init();
 	void drawPath(IplImage* frame, IplImage* desktop);
 	PathFinderFitLine(Model *m);
 	~PathFinderFitLine();
 };
-
 
 #endif

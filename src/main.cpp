@@ -31,22 +31,22 @@ int main(int argc, char** argv) {
 	bool run = 1;
 	while (blackBoard->update() && run) {
 		char c = cvWaitKey(33);
-		switch(c){
-			case 27:
-				run = 0;
-				break; //ESC
-			case 'c':
-				blackBoard->clear();
-				break;
-			case '1':
-				blackBoard->setPathFinder(allRed);
-				break;
-			case '2':
-				blackBoard->setPathFinder(maxSquare);
-				break;
-			case '3':
-				blackBoard->setPathFinder(fitLine);
-				break;
+		switch (c) {
+		case 27:
+			run = 0;
+			break; //ESC
+		case 'c':
+			blackBoard->clear();
+			break;
+		case '1':
+			blackBoard->setPathFinder(allRed);
+			break;
+		case '2':
+			blackBoard->setPathFinder(maxSquare);
+			break;
+		case '3':
+			blackBoard->setPathFinder(fitLine);
+			break;
 		}
 	}
 	delete blackBoard;

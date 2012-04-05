@@ -25,7 +25,7 @@ public:
 	void setPathFinder(PathFinder *pF);
 	void clear();
 	int calibrate();
-	
+
 	IplImage *getBlackBoardImage();
 	IplImage *getWebcamImage();
 	void setBlackBoardImage(IplImage *img);

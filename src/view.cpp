@@ -1,5 +1,5 @@
 #include "view.hpp"
 
-void View::refresh(){
+void View::refresh() {
 
 }
