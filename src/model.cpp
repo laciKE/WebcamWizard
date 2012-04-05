@@ -56,7 +56,7 @@ void Model::setBlackBoardImage(IplImage *img ){
 	}
 	cvReleaseImage(&blackBoardImage);
 	blackBoardImage = cvCloneImage(img);
-	//view->refresh();
+	view->refresh();
 }
 
 void Model::setPathFinder(class PathFinder* pF){
@@ -74,8 +74,8 @@ Model::~Model() {
 	cvDestroyWindow(webcamWindow);
 }
 
-Model::Model(/*View *parent*/) {
-	//view = parent;
+Model::Model(View *parent) {
+	view = parent;
 	//window names initialization
 	strcpy(blackBoardWindow, "Model");
 	strcpy(webcamWindow, "Webcam");

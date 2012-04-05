@@ -5,13 +5,13 @@
 #include <opencv/highgui.h>
 #include "calibrator.hpp"
 #include "pathfinder.hpp"
-//#include "view.hpp"
+#include "view.hpp"
 
 class Model {
 private:
 	IplImage *blackBoardImage;
 	IplImage *webcamImage;
-//	View *view;
+	class View *view;
 	class PathFinder *pathFinder;
 
 public:
@@ -31,8 +31,8 @@ public:
 	void setBlackBoardImage(IplImage *img);
 	char blackBoardWindow[64], webcamWindow[64];
 	void Init();
-	//Model(View *parent);
-	Model();
+	Model(View *parent);
+	//Model();
 	~Model();
 };
 

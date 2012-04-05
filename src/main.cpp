@@ -3,13 +3,15 @@
 #include <iostream>
 #include "model.hpp"
 #include "pathfinder.hpp"
+#include "view.hpp"
 //#include "pathfinder_all_red.hpp"
 
 using namespace std;
 
 int main(int argc, char** argv) {
 	//initialization and calibration of new blackBoard
-	Model *blackBoard = new Model();
+	View *viewStub = new View();
+	Model *blackBoard = new Model(viewStub);
 	blackBoard->Init();
 	blackBoard->calibrate();
 	PathFinder* allRed = new PathFinderAllRed(blackBoard);
