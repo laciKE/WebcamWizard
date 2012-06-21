@@ -15,6 +15,7 @@ private:
 	IplImage *webcamImage;
 	class View *view;
 	class PathFinder *pathFinder;
+	void debug(const char *str);
 
 public:
 	class Calibrator *calibrator; //TODO getCalibrationData
