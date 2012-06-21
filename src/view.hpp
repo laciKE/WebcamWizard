@@ -11,6 +11,7 @@ class View : public QWidget, private Ui::Form
         private:
         Model *model;
         QImage *IplImage2QImage(IplImage *iplImg);
+        QTimer * timer;
 
         public:
 		View(QWidget *parent = 0);
@@ -20,8 +21,13 @@ class View : public QWidget, private Ui::Form
 		int getDesktopHeight();
 
 
+
 private slots:
                 void on_pushButton_clicked();
+
+public slots:
+                void refreshSlot();
 };
  
 #endif
+

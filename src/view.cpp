@@ -52,17 +52,26 @@ return qimg;
 
 View::View(QWidget *parent)
 {
-	setupUi(this); // this sets up GUI
+        setupUi(this); // this sets up GUI
+        timer = new QTimer(this);
         model = new Model(this);
         model->Init();
+        connect(timer, SIGNAL(timeout()), this, SLOT(refreshSlot()));
 
 }
 
-void View::refresh(){ // casovac vola refresh nejaky interval
+void View::refresh(){ // timer call refresh
 IplImage *img = model->getBlackBoardImage(); // IPLImage
 QImage *qimg = IplImage2QImage(img);
 this->desktop->setPixmap(QPixmap::fromImage(*qimg));
+delete qimg;
+cvReleaseImage(&img);
 //Label.setPixmap(QPixmap::fromImage(myImage));
+}
+
+void View::refreshSlot() {
+    model->update();
+    refresh();
 }
 
 
@@ -74,8 +83,12 @@ void View::on_pushButton_clicked()
     PathFinder *pH = new PathFinderFitLine(model);
     model->setPathFinder(pH);
     debugOutput->append(QString("chcem bezat")); //std::cerr << " chcem bezat\n";
-    bool run = 1;
-    while (model->update() && run) {
+    //bool run = 1;
+    timer->start(33);
+
+
+    /*
+    //while (model->update() && run) {
 	    refresh();
 	char c = cvWaitKey(33);
         //debugOutput->append(QString("bezim"));  //std::cerr << "bezim\n";
@@ -84,8 +97,9 @@ void View::on_pushButton_clicked()
 			run = 0;
 			break; //ESC
 	}
-    }
-    delete pH;
+   // }
+   */
+    //delete pH;
 }
 
 void View::debug(QString str) {
