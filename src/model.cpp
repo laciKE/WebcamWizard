@@ -120,6 +120,7 @@ void Model::Init() {
 	clear();
 
 	//cvSetWindowProperty("Model",CV_WND_PROP_FULLSCREEN,0);
+	debug("Application start");
 }
 
 int Model::calibrate(){

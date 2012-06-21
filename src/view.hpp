@@ -16,6 +16,9 @@ class View : public QWidget, private Ui::Form
 		View(QWidget *parent = 0);
                 void refresh();
 		void debug(QString str);
+		int getDesktopWidth();
+		int getDesktopHeight();
+
 
 private slots:
                 void on_pushButton_clicked();

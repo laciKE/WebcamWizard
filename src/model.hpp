@@ -18,8 +18,8 @@ private:
 
 public:
 	class Calibrator *calibrator; //TODO getCalibrationData
-	static int blackBoardWidth;
-	static int blackBoardHeight;
+	int blackBoardWidth;
+	int blackBoardHeight;
 	CvCapture *webcam;
 	int update();
 	//actions on model
