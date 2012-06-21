@@ -2,6 +2,7 @@
 *.log
 *.o
 *~
+*.swp
 moc_*
 bin/
 video/
