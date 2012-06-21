@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'webcamWizard.ui'
 **
-** Created: Thu Jun 21 22:49:33 2012
+** Created: Fri Jun 22 00:38:30 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -28,6 +28,7 @@ public:
     QPushButton *pushButton;
     QLabel *desktop;
     QTextEdit *debugOutput;
+    QLabel *camera;
 
     void setupUi(QWidget *Form)
     {
@@ -39,11 +40,15 @@ public:
         pushButton->setGeometry(QRect(220, 10, 181, 31));
         desktop = new QLabel(Form);
         desktop->setObjectName(QString::fromUtf8("desktop"));
-        desktop->setGeometry(QRect(40, 60, 800, 600));
+        desktop->setGeometry(QRect(-40, 100, 800, 600));
         desktop->setLineWidth(1);
         debugOutput = new QTextEdit(Form);
         debugOutput->setObjectName(QString::fromUtf8("debugOutput"));
         debugOutput->setGeometry(QRect(680, 40, 311, 371));
+        camera = new QLabel(Form);
+        camera->setObjectName(QString::fromUtf8("camera"));
+        camera->setGeometry(QRect(660, 440, 320, 240));
+        camera->setLineWidth(1);
 
         retranslateUi(Form);
 
@@ -55,6 +60,7 @@ public:
         Form->setWindowTitle(QApplication::translate("Form", "Form", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("Form", "Calibration - initialize", 0, QApplication::UnicodeUTF8));
         desktop->setText(QString());
+        camera->setText(QString());
     } // retranslateUi
 
 };

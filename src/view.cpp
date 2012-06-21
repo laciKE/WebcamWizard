@@ -66,6 +66,12 @@ QImage *qimg = IplImage2QImage(img);
 this->desktop->setPixmap(QPixmap::fromImage(*qimg));
 delete qimg;
 cvReleaseImage(&img);
+
+IplImage *img2 = model->getWebcamImage(); // IPLImage
+QImage *qimg2 = IplImage2QImage(img2);
+this->camera->setPixmap(QPixmap::fromImage(*qimg2));
+delete qimg2;
+cvReleaseImage(&img2);
 //Label.setPixmap(QPixmap::fromImage(myImage));
 }
 
