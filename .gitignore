@@ -1,0 +1,9 @@
+*.aux
+*.log
+*.o
+*~
+moc_*
+bin/
+video/
+data
+Makefile
