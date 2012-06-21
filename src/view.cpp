@@ -65,6 +65,7 @@ this->desktop->setPixmap(QPixmap::fromImage(*qimg));
 //Label.setPixmap(QPixmap::fromImage(myImage));
 }
 
+
 void View::on_pushButton_clicked()
 {
     model->calibrate();
@@ -90,3 +91,12 @@ void View::on_pushButton_clicked()
 void View::debug(QString str) {
     debugOutput->append(str); // write message to debugOutput
 }
+
+int View::getDesktopWidth(){
+    return View::desktop->width();
+}
+
+int View::getDesktopHeight(){
+    return View::desktop->height();
+}
+
