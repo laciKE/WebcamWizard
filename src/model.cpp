@@ -77,6 +77,8 @@ Model::~Model() {
 
 Model::Model(View *parent) {
 	view = parent;
+	blackBoardWidth = view->getDesktopWidth();
+	blackBoardHeight = view->getDesktopHeight();
 	//window names initialization
 	strcpy(blackBoardWindow, "Model");
 	strcpy(webcamWindow, "Webcam");
