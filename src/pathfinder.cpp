@@ -96,7 +96,7 @@ PathFinder::~PathFinder(){
 //Find and draw all red pixels from frame
 
 void PathFinderAllRed::Init() {
-	cerr << "PathFinderAllRed\n";
+	model->debug("PathFinderAllRed\n");
 }
 
 void PathFinderAllRed::drawPath(IplImage* frame, IplImage* desktop){
@@ -128,7 +128,7 @@ PathFinderAllRed::~PathFinderAllRed(){
 void PathFinderMaxSquare::Init() {
 	lastPoint.x = -1;
 	lastPoint.y = -1;
-	cerr << "PathFinderMaxSquare\n";
+	model->debug("PathFinderMaxSquare\n");
 }
 
 void PathFinderMaxSquare::drawPath(IplImage* frame, IplImage* desktop){
@@ -203,7 +203,7 @@ void PathFinderFitLine::Init() {
 
 	cvClearSeq(point_seq);
 
-	cerr << "PathFinderFitLine\n";
+	model->debug("PathFinderFitLine\n");
 }
 /*
 	CvPoint2D32f points[10];

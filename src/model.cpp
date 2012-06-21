@@ -14,14 +14,14 @@ int Model::update() {
 
 	//TODO moznost vypnut zobrazovanie webcamImage
 	cvResize(frame, webcamImage);
-	cvShowImage(webcamWindow, webcamImage);
+	//cvShowImage(webcamWindow, webcamImage);
 
 	if (!pathFinder)
 		return 0;
 
 	pathFinder->drawPath(frame, blackBoardImage);
 
-	cvShowImage(blackBoardWindow, blackBoardImage);
+	//cvShowImage(blackBoardWindow, blackBoardImage);
 
 	return 1;
 }
@@ -52,7 +52,7 @@ IplImage* Model::getWebcamImage(){
 
 void Model::setBlackBoardImage(IplImage *img ){
 	if((img->width != blackBoardWidth) || (img->height != blackBoardHeight)){
-		cerr << "bad image size in model::setBlackBoardImage(IplImage *img)\n";
+		debug("bad image size in model::setBlackBoardImage(IplImage *img)\n");
 		return;
 	}
 	cvReleaseImage(&blackBoardImage);
@@ -71,8 +71,8 @@ Model::~Model() {
 	cvReleaseCapture(&webcam);
 	cvReleaseImage(&blackBoardImage);
 	cvReleaseImage(&webcamImage);
-	cvDestroyWindow(blackBoardWindow);
-	cvDestroyWindow(webcamWindow);
+	//cvDestroyWindow(blackBoardWindow);
+	//cvDestroyWindow(webcamWindow);
 }
 
 Model::Model(View *parent) {
@@ -84,7 +84,7 @@ Model::Model(View *parent) {
 	webcam = cvCaptureFromCAM(0);
 	//webcam=cvCreateCameraCapture(CV_CAP_ANY);
 	if (!webcam) {
-		cerr << "Create webcam capture failed\n";
+		debug("Create webcam capture failed\n");
 		exit(1);
 	}
 	blackBoardImage = cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U,3);
@@ -92,7 +92,7 @@ Model::Model(View *parent) {
 	//create webcamImage
 	IplImage *frame = cvQueryFrame(webcam);
 	if (!frame) {
-		cerr << "Query frame failed\n";
+		debug("Query frame failed\n");
 		exit(1);
 	}
 
@@ -106,6 +106,7 @@ Model::Model(View *parent) {
 }
 
 void Model::Init() {
+/*
 	//windows initialization
 	cvNamedWindow(webcamWindow, CV_WINDOW_AUTOSIZE);
 	cvMoveWindow(webcamWindow, 600, 0);
@@ -113,7 +114,7 @@ void Model::Init() {
 	cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE);
 	//cvMoveWindow(blackBoardWindow, 328, 0);
 	cvMoveWindow(blackBoardWindow, 0, 0);
-
+*/
 	clear();
 
 	//cvSetWindowProperty("Model",CV_WND_PROP_FULLSCREEN,0);
@@ -124,4 +125,8 @@ int Model::calibrate(){
 	setBlackBoardImage(cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U,3));
 	clear();
 	return result;
+}
+
+void Model::debug(const char *str){
+	view->debug(QString(str));
 }
