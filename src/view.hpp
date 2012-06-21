@@ -15,7 +15,8 @@ class View : public QWidget, private Ui::Form
         public:
 		View(QWidget *parent = 0);
                 void refresh();
- 
+		void debug(QString str);
+
 private slots:
                 void on_pushButton_clicked();
 };

@@ -193,9 +193,11 @@ int Calibrator::calibrate()
     for(int i=0; i<4; i++)
     {
         char str[256];
-        sprintf(str,"%d:%d %d",i,calibrationData.vertex[i].x,calibrationData.vertex[i].y); //cerr << i << ": " << calibrationData.vertex[i].x << " " << calibrationData.vertex[i].y << endl;
+        sprintf(str,"%d:%d %d",i,calibrationData.vertex[i].x,calibrationData.vertex[i].y); 
+	cerr << i << ": " << calibrationData.vertex[i].x << " " << calibrationData.vertex[i].y << endl;
         debug(str);
-        calibrationdData.vertex[i] = calib[(8+mini+current*i)%4];
+
+        calibrationData.vertex[i] = calib[(8+mini+current*i)%4];
 
 
     }
@@ -219,7 +221,7 @@ int Calibrator::calibrate()
         calibrationData.vertex[1] = cvPoint(640, 0);
         calibrationData.vertex[2] = cvPoint(640, 480);
         calibrationData.vertex[3] = cvPoint(0, 480);
-        dubug("Calibration failed. Calibration is on manual mod."); //cerr << "Calibration failed. Calibration is on manual mod."<< endl;
+        debug("Calibration failed. Calibration is on manual mod."); //cerr << "Calibration failed. Calibration is on manual mod."<< endl;
         return 0;
     }
     else
@@ -238,3 +240,11 @@ Calibrator::~Calibrator()
 {
 
 }
+
+void Calibrator::debug(const char *str)
+{
+	model->debug(str);
+
+}
+
+

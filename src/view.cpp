@@ -77,7 +77,7 @@ void View::on_pushButton_clicked()
     while (model->update() && run) {
 	    refresh();
 	char c = cvWaitKey(33);
-        debugOutput->append(QString("bezim"));  //std::cerr << "bezim\n";
+        //debugOutput->append(QString("bezim"));  //std::cerr << "bezim\n";
 	switch(c){
 		case 27:
 			run = 0;

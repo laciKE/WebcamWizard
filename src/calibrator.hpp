@@ -13,6 +13,7 @@ class Calibrator {
 private:
 	class Model* model;
 	IplImage* DetectAndDrawQuads(IplImage* img);
+	void debug(const char *str);
 
 public:
         //coordinates of blackboard's corners in webcam

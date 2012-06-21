@@ -15,7 +15,6 @@ private:
 	IplImage *webcamImage;
 	class View *view;
 	class PathFinder *pathFinder;
-	void debug(const char *str);
 
 public:
 	class Calibrator *calibrator; //TODO getCalibrationData
@@ -28,6 +27,7 @@ public:
 	void setPathFinder(PathFinder *pF);
 	void clear();
 	int calibrate();
+	void debug(const char *str);
 	
 	IplImage *getBlackBoardImage();
 	IplImage *getWebcamImage();
