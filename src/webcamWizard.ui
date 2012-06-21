@@ -26,7 +26,7 @@
     <string>Calibration - initialize</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="desktop">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -35,8 +35,21 @@
      <height>600</height>
     </rect>
    </property>
+   <property name="lineWidth">
+    <number>1</number>
+   </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="debugOutput">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>40</y>
+     <width>311</width>
+     <height>371</height>
+    </rect>
    </property>
   </widget>
  </widget>

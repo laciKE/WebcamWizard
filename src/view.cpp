@@ -61,7 +61,7 @@ View::View(QWidget *parent)
 void View::refresh(){ // casovac vola refresh nejaky interval
 IplImage *img = model->getBlackBoardImage(); // IPLImage
 QImage *qimg = IplImage2QImage(img);
-this->label->setPixmap(QPixmap::fromImage(*qimg));
+this->desktop->setPixmap(QPixmap::fromImage(*qimg));
 //Label.setPixmap(QPixmap::fromImage(myImage));
 }
 
@@ -72,12 +72,12 @@ void View::on_pushButton_clicked()
     //TODO spravit casovac na update
     PathFinder *pH = new PathFinderFitLine(model);
     model->setPathFinder(pH);
-    std::cerr << " chcem bezat\n";
+    debugOutput->append(QString("chcem bezat")); //std::cerr << " chcem bezat\n";
     bool run = 1;
     while (model->update() && run) {
 	    refresh();
 	char c = cvWaitKey(33);
-	std::cerr << "bezim\n";
+        debugOutput->append(QString("bezim"));  //std::cerr << "bezim\n";
 	switch(c){
 		case 27:
 			run = 0;
@@ -85,4 +85,8 @@ void View::on_pushButton_clicked()
 	}
     }
     delete pH;
+}
+
+void View::debug(QString str) {
+    debugOutput->append(str); // write message to debugOutput
 }

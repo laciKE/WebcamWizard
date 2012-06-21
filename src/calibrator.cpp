@@ -107,11 +107,11 @@ IplImage* Calibrator::DetectAndDrawQuads(IplImage* img)
 //(Tono)
 int Calibrator::calibrate()
 {
+    debug("Calibration start"); //cerr << "calibration start" << endl;
     IplImage* desktop = cvCreateImage(cvSize(
                                           model->blackBoardWidth,
                                           model->blackBoardHeight), IPL_DEPTH_8U, 3);
 
-    //cerr << "calibration start" << endl;
     //show white screen for autocalibration
     int W = desktop->widthStep;
     int H = desktop->height;
@@ -192,14 +192,19 @@ int Calibrator::calibrate()
 
     for(int i=0; i<4; i++)
     {
-        calibrationData.vertex[i] = calib[(8+mini+current*i)%4];
-        cerr << i << ": " << calibrationData.vertex[i].x << " " << calibrationData.vertex[i].y << endl;
+        char str[256];
+        sprintf(str,"%d:%d %d",i,calibrationData.vertex[i].x,calibrationData.vertex[i].y); //cerr << i << ": " << calibrationData.vertex[i].x << " " << calibrationData.vertex[i].y << endl;
+        debug(str);
+        calibrationdData.vertex[i] = calib[(8+mini+current*i)%4];
+
+
     }
 
     cvReleaseImage(&desktop);
     cvReleaseImage(&frame_gray);
     cvReleaseImage(&frame_bw);
-    cerr << "calibration end" << endl;
+
+    debug("calibration end"); //cerr << "calibration end" << endl;
 
     bool test = false;
     for (int i=0; i<4; i++)
@@ -214,12 +219,12 @@ int Calibrator::calibrate()
         calibrationData.vertex[1] = cvPoint(640, 0);
         calibrationData.vertex[2] = cvPoint(640, 480);
         calibrationData.vertex[3] = cvPoint(0, 480);
-        cerr << "Calibration failed. Calibration is on manual mod."<< endl;
+        dubug("Calibration failed. Calibration is on manual mod."); //cerr << "Calibration failed. Calibration is on manual mod."<< endl;
         return 0;
     }
     else
     {
-        cerr << "Calibration succesfull." << endl;
+        debug("Calibration succesfull."); //cerr << "Calibration succesfull." << endl;
         return 1;
     }
 }

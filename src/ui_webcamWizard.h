@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'webcamWizard.ui'
 **
-** Created: Sun Apr 1 18:21:44 2012
+** Created: Thu Jun 21 22:49:33 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -17,6 +17,7 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
+#include <QtGui/QTextEdit>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,7 +26,8 @@ class Ui_Form
 {
 public:
     QPushButton *pushButton;
-    QLabel *label;
+    QLabel *desktop;
+    QTextEdit *debugOutput;
 
     void setupUi(QWidget *Form)
     {
@@ -35,9 +37,13 @@ public:
         pushButton = new QPushButton(Form);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(220, 10, 181, 31));
-        label = new QLabel(Form);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(40, 60, 800, 600));
+        desktop = new QLabel(Form);
+        desktop->setObjectName(QString::fromUtf8("desktop"));
+        desktop->setGeometry(QRect(40, 60, 800, 600));
+        desktop->setLineWidth(1);
+        debugOutput = new QTextEdit(Form);
+        debugOutput->setObjectName(QString::fromUtf8("debugOutput"));
+        debugOutput->setGeometry(QRect(680, 40, 311, 371));
 
         retranslateUi(Form);
 
@@ -48,7 +54,7 @@ public:
     {
         Form->setWindowTitle(QApplication::translate("Form", "Form", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("Form", "Calibration - initialize", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("Form", "TextLabel", 0, QApplication::UnicodeUTF8));
+        desktop->setText(QString());
     } // retranslateUi
 
 };
