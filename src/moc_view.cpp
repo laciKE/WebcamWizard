@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'view.hpp'
 **
-** Created: Fri Jun 22 00:38:43 2012
+** Created: Fri Jun 22 03:33:16 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_View[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,14 +32,17 @@ static const uint qt_meta_data_View[] = {
 
  // slots: signature, parameters, type, tag, flags
        6,    5,    5,    5, 0x08,
-      30,    5,    5,    5, 0x0a,
+      30,    5,    5,    5, 0x08,
+      55,    5,    5,    5, 0x08,
+      84,    5,    5,    5, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_View[] = {
     "View\0\0on_pushButton_clicked()\0"
-    "refreshSlot()\0"
+    "on_debugButton_clicked()\0"
+    "on_calibrateButton_clicked()\0refreshSlot()\0"
 };
 
 const QMetaObject View::staticMetaObject = {
@@ -72,10 +75,12 @@ int View::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: on_pushButton_clicked(); break;
-        case 1: refreshSlot(); break;
+        case 1: on_debugButton_clicked(); break;
+        case 2: on_calibrateButton_clicked(); break;
+        case 3: refreshSlot(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
 }

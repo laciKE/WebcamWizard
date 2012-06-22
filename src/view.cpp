@@ -53,10 +53,12 @@ return qimg;
 View::View(QWidget *parent)
 {
         setupUi(this); // this sets up GUI
+        desktop->setStyleSheet("QLabel { background-color : black; color : blue; }");
         timer = new QTimer(this);
         model = new Model(this);
         model->Init();
         connect(timer, SIGNAL(timeout()), this, SLOT(refreshSlot()));
+
 
 }
 
@@ -66,50 +68,29 @@ QImage *qimg = IplImage2QImage(img);
 this->desktop->setPixmap(QPixmap::fromImage(*qimg));
 delete qimg;
 cvReleaseImage(&img);
-
-IplImage *img2 = model->getWebcamImage(); // IPLImage
-QImage *qimg2 = IplImage2QImage(img2);
-this->camera->setPixmap(QPixmap::fromImage(*qimg2));
-delete qimg2;
-cvReleaseImage(&img2);
 //Label.setPixmap(QPixmap::fromImage(myImage));
+
+img = model->getWebcamImage(); // IPLImage
+qimg = IplImage2QImage(img);
+this->camera->setPixmap(QPixmap::fromImage(*qimg));
+delete qimg;
+cvReleaseImage(&img);
 }
 
 void View::refreshSlot() {
     model->update();
     refresh();
+   //debugView->refresh();
 }
 
 
 void View::on_pushButton_clicked()
 {
-    model->calibrate();
-    /*docasne kod kvoli testovaniu */
-    //TODO spravit casovac na update
-    PathFinder *pH = new PathFinderFitLine(model);
-    model->setPathFinder(pH);
-    debugOutput->append(QString("chcem bezat")); //std::cerr << " chcem bezat\n";
-    //bool run = 1;
-    timer->start(33);
 
-
-    /*
-    //while (model->update() && run) {
-	    refresh();
-	char c = cvWaitKey(33);
-        //debugOutput->append(QString("bezim"));  //std::cerr << "bezim\n";
-	switch(c){
-		case 27:
-			run = 0;
-			break; //ESC
-	}
-   // }
-   */
-    //delete pH;
 }
 
 void View::debug(QString str) {
-    debugOutput->append(str); // write message to debugOutput
+    debugOutput->append(str);
 }
 
 int View::getDesktopWidth(){
@@ -120,3 +101,40 @@ int View::getDesktopHeight(){
     return View::desktop->height();
 }
 
+
+void View::on_debugButton_clicked()
+{
+    if(debugButton->text().compare("Debug")){
+    debugWidget->show();
+    debugButton->setText("Hide debug");
+    } else {
+    debugWidget->hide();
+    debugButton->setText("Debug");}
+}
+
+void View::on_calibrateButton_clicked()
+{
+    model->calibrate();
+    /*docasne kod kvoli testovaniu */
+    //TODO spravit casovac na update
+    PathFinder *pH = new PathFinderFitLine(model);
+    model->setPathFinder(pH);
+    //debugOutput->append(QString("chcem bezat")); //std::cerr << " chcem bezat\n";
+    //bool run = 1;
+    timer->start(33);
+
+
+    /*
+    //while (model->update() && run) {
+            refresh();
+        char c = cvWaitKey(33);
+        //debugOutput->append(QString("bezim"));  //std::cerr << "bezim\n";
+        switch(c){
+                case 27:
+                        run = 0;
+                        break; //ESC
+        }
+   // }
+   */
+    //delete pH;
+}

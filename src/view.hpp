@@ -9,11 +9,13 @@ class View : public QWidget, private Ui::Form
 {
 	Q_OBJECT
         private:
+
         Model *model;
         QImage *IplImage2QImage(IplImage *iplImg);
         QTimer * timer;
 
         public:
+
 		View(QWidget *parent = 0);
                 void refresh();
 		void debug(QString str);
@@ -24,6 +26,10 @@ class View : public QWidget, private Ui::Form
 
 private slots:
                 void on_pushButton_clicked();
+
+                void on_debugButton_clicked();
+
+                void on_calibrateButton_clicked();
 
 public slots:
                 void refreshSlot();
