@@ -139,24 +139,39 @@
   <widget class="QDockWidget" name="debugWidget">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>410</x>
      <y>90</y>
      <width>511</width>
-     <height>311</height>
+     <height>288</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>511</width>
+     <height>288</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>511</width>
+     <height>288</height>
+    </size>
    </property>
    <property name="floating">
     <bool>true</bool>
    </property>
    <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllDockWidgetAreas</set>
    </property>
    <widget class="QWidget" name="dock">
     <widget class="QLabel" name="camera">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>0</y>
        <width>320</width>
        <height>240</height>
       </rect>
@@ -168,10 +183,10 @@
     <widget class="QTextEdit" name="debugOutput">
      <property name="geometry">
       <rect>
-       <x>360</x>
-       <y>-3</y>
+       <x>350</x>
+       <y>0</y>
        <width>151</width>
-       <height>281</height>
+       <height>231</height>
       </rect>
      </property>
      <property name="readOnly">

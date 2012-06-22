@@ -53,6 +53,7 @@ return qimg;
 View::View(QWidget *parent)
 {
         setupUi(this); // this sets up GUI
+        debugWidget->hide();
         desktop->setStyleSheet("QLabel { background-color : black; color : blue; }");
         timer = new QTimer(this);
         model = new Model(this);
@@ -104,7 +105,8 @@ int View::getDesktopHeight(){
 
 void View::on_debugButton_clicked()
 {
-    if(debugButton->text().compare("Debug")){
+
+    if(debugButton->text() == "Debug"){
     debugWidget->show();
     debugButton->setText("Hide debug");
     } else {

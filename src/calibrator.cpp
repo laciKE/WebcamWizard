@@ -194,7 +194,7 @@ int Calibrator::calibrate()
     {
         char str[256];
         sprintf(str,"%d:%d %d",i,calibrationData.vertex[i].x,calibrationData.vertex[i].y); 
-	cerr << i << ": " << calibrationData.vertex[i].x << " " << calibrationData.vertex[i].y << endl;
+        //cerr << i << ": " << calibrationData.vertex[i].x << " " << calibrationData.vertex[i].y << endl;
         debug(str);
 
         calibrationData.vertex[i] = calib[(8+mini+current*i)%4];

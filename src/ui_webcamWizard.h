@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'webcamWizard.ui'
 **
-** Created: Fri Jun 22 03:27:58 2012
+** Created: Fri Jun 22 20:44:16 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -77,17 +77,20 @@ public:
         comboBox->setGeometry(QRect(580, 10, 181, 31));
         debugWidget = new QDockWidget(Form);
         debugWidget->setObjectName(QString::fromUtf8("debugWidget"));
-        debugWidget->setGeometry(QRect(510, 90, 511, 311));
+        debugWidget->setGeometry(QRect(410, 90, 511, 288));
+        debugWidget->setMinimumSize(QSize(511, 288));
+        debugWidget->setMaximumSize(QSize(511, 288));
         debugWidget->setFloating(true);
-        debugWidget->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
+        debugWidget->setFeatures(QDockWidget::DockWidgetMovable);
+        debugWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
         dock = new QWidget();
         dock->setObjectName(QString::fromUtf8("dock"));
         camera = new QLabel(dock);
         camera->setObjectName(QString::fromUtf8("camera"));
-        camera->setGeometry(QRect(10, 30, 320, 240));
+        camera->setGeometry(QRect(10, 0, 320, 240));
         debugOutput = new QTextEdit(dock);
         debugOutput->setObjectName(QString::fromUtf8("debugOutput"));
-        debugOutput->setGeometry(QRect(360, -3, 151, 281));
+        debugOutput->setGeometry(QRect(350, 0, 151, 231));
         debugOutput->setReadOnly(true);
         debugWidget->setWidget(dock);
 
