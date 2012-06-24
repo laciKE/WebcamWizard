@@ -125,7 +125,7 @@ void Model::Init() {
 
 int Model::calibrate(){
 	int result = calibrator->calibrate();
-	setBlackBoardImage(cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U,3));
+        setBlackBoardImage(cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U,3));
 	clear();
 	return result;
 }

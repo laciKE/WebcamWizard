@@ -1,18 +1,21 @@
 #include <cstdio>
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#include <opencv/ml.h>
 #include <iostream>
 #include "model.hpp"
 #include "calibrator.hpp"
 
 using namespace std;
 
+/*TODO urobit timer namiesto cvwaitKey, kt. nefunguje*/
+
+
 int thresh = 10;
 IplImage* img = 0;
 IplImage* img0 = 0;
 CvMemStorage* storage = 0;
 CvPoint calib[4];
-
 double angle( CvPoint* pt1, CvPoint* pt2, CvPoint* pt0 )
 {
     double dx1 = pt1->x - pt0->x;
@@ -127,7 +130,9 @@ int Calibrator::calibrate()
     //cvShowImage(blackBoard->blackBoardWindow, desktop);
 
     //wait 250ms
+    //debug("zacinam cakat 25s");
     cvWaitKey(250);
+    //debug("skoncil som");
 
     //capture frame from webcam
     IplImage* frame = cvQueryFrame(model->webcam);
@@ -222,11 +227,23 @@ int Calibrator::calibrate()
         calibrationData.vertex[2] = cvPoint(640, 480);
         calibrationData.vertex[3] = cvPoint(0, 480);
         debug("Calibration failed. Calibration is on manual mod."); //cerr << "Calibration failed. Calibration is on manual mod."<< endl;
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Calibration");
+        msgBox.setText("Calibration failed. Calibration is on manual mod.");
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
         return 0;
     }
     else
     {
         debug("Calibration succesfull."); //cerr << "Calibration succesfull." << endl;
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Calibration");
+        msgBox.setText("Calibration succesfull.");
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
         return 1;
     }
 }

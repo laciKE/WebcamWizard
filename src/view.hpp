@@ -31,6 +31,10 @@ private slots:
 
                 void on_calibrateButton_clicked();
 
+                void on_clearButton_clicked();
+
+                void on_aboutButton_clicked();
+
 public slots:
                 void refreshSlot();
 };

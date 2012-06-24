@@ -54,6 +54,9 @@ View::View(QWidget *parent)
 {
         setupUi(this); // this sets up GUI
         debugWidget->hide();
+        debugWidget->setFeatures(QDockWidget::DockWidgetMovable);
+        //debugWidget->setFeatures(QDockWidget::);
+        //debugWidget->mouseGrabber()
         desktop->setStyleSheet("QLabel { background-color : black; color : blue; }");
         timer = new QTimer(this);
         model = new Model(this);
@@ -117,6 +120,7 @@ void View::on_debugButton_clicked()
 void View::on_calibrateButton_clicked()
 {
     model->calibrate();
+
     /*docasne kod kvoli testovaniu */
     //TODO spravit casovac na update
     PathFinder *pH = new PathFinderFitLine(model);
@@ -139,4 +143,20 @@ void View::on_calibrateButton_clicked()
    // }
    */
     //delete pH;
+}
+
+void View::on_clearButton_clicked()
+{
+    model->clear();
+}
+
+void View::on_aboutButton_clicked()
+{
+     QMessageBox msgBox;
+     msgBox.setWindowTitle("About");
+     msgBox.setText("Application was created by Ladislav Baco and Anton Koval");
+     msgBox.setIcon(QMessageBox::Information);
+     msgBox.setInformativeText("Webcam Wizard was project on the subject to school");
+     msgBox.setDefaultButton(QMessageBox::Ok);
+     msgBox.exec();
 }

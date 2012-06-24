@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'view.hpp'
 **
-** Created: Fri Jun 22 20:44:30 2012
+** Created: Sun Jun 24 13:48:44 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_View[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,7 +34,9 @@ static const uint qt_meta_data_View[] = {
        6,    5,    5,    5, 0x08,
       30,    5,    5,    5, 0x08,
       55,    5,    5,    5, 0x08,
-      84,    5,    5,    5, 0x0a,
+      84,    5,    5,    5, 0x08,
+     109,    5,    5,    5, 0x08,
+     134,    5,    5,    5, 0x0a,
 
        0        // eod
 };
@@ -42,7 +44,9 @@ static const uint qt_meta_data_View[] = {
 static const char qt_meta_stringdata_View[] = {
     "View\0\0on_pushButton_clicked()\0"
     "on_debugButton_clicked()\0"
-    "on_calibrateButton_clicked()\0refreshSlot()\0"
+    "on_calibrateButton_clicked()\0"
+    "on_clearButton_clicked()\0"
+    "on_aboutButton_clicked()\0refreshSlot()\0"
 };
 
 const QMetaObject View::staticMetaObject = {
@@ -77,10 +81,12 @@ int View::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 0: on_pushButton_clicked(); break;
         case 1: on_debugButton_clicked(); break;
         case 2: on_calibrateButton_clicked(); break;
-        case 3: refreshSlot(); break;
+        case 3: on_clearButton_clicked(); break;
+        case 4: on_aboutButton_clicked(); break;
+        case 5: refreshSlot(); break;
         default: ;
         }
-        _id -= 4;
+        _id -= 6;
     }
     return _id;
 }
