@@ -2,6 +2,7 @@
 #include <opencv/highgui.h>
 #include <iostream>
 #include <QtGui> 
+#include <QFileDialog>
 #include "view.hpp"
 #include "model.hpp"
 #include "pathfinder.hpp"
@@ -159,4 +160,26 @@ void View::on_aboutButton_clicked()
      msgBox.setInformativeText("Webcam Wizard was project on the subject to school");
      msgBox.setDefaultButton(QMessageBox::Ok);
      msgBox.exec();
+}
+
+void View::on_loadButton_clicked()
+{
+    QString openFilename = QFileDialog::getOpenFileName( this, tr("Open Image"), QDir::currentPath(), tr("Image files (*.jpg);;All files (*.*)"), 0, QFileDialog::DontUseNativeDialog );
+    if (!openFilename.isNull()) {
+    IplImage* img = cvLoadImage(openFilename.toAscii());
+    model->setBlackBoardImage(img);
+    }
+    //debug(filename);
+}
+
+void View::on_saveButton_clicked()
+{
+    QString saveFilename = QFileDialog::getSaveFileName( this, tr("Save Image"), QDir::currentPath(),tr("Documents (*.jpg)"), 0, QFileDialog::DontUseNativeDialog );
+    if (!saveFilename.isNull()) {
+        if (!saveFilename.contains(".jpg")) {
+            saveFilename.append(".jpg");
+        }
+    IplImage* img = model->getBlackBoardImage();
+    cvSaveImage(saveFilename.toAscii(),img);
+    }
 }

@@ -35,6 +35,10 @@ private slots:
 
                 void on_aboutButton_clicked();
 
+                void on_loadButton_clicked();
+
+                void on_saveButton_clicked();
+
 public slots:
                 void refreshSlot();
 };
