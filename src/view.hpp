@@ -39,6 +39,8 @@ private slots:
 
                 void on_saveButton_clicked();
 
+                void on_colorButton_clicked();
+
 public slots:
                 void refreshSlot();
 };

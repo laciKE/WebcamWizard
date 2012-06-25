@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'view.hpp'
 **
-** Created: Mon Jun 25 09:22:21 2012
+** Created: Mon Jun 25 09:53:03 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_View[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -38,7 +38,8 @@ static const uint qt_meta_data_View[] = {
      109,    5,    5,    5, 0x08,
      134,    5,    5,    5, 0x08,
      158,    5,    5,    5, 0x08,
-     182,    5,    5,    5, 0x0a,
+     182,    5,    5,    5, 0x08,
+     207,    5,    5,    5, 0x0a,
 
        0        // eod
 };
@@ -50,7 +51,7 @@ static const char qt_meta_stringdata_View[] = {
     "on_clearButton_clicked()\0"
     "on_aboutButton_clicked()\0"
     "on_loadButton_clicked()\0on_saveButton_clicked()\0"
-    "refreshSlot()\0"
+    "on_colorButton_clicked()\0refreshSlot()\0"
 };
 
 const QMetaObject View::staticMetaObject = {
@@ -89,10 +90,11 @@ int View::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 4: on_aboutButton_clicked(); break;
         case 5: on_loadButton_clicked(); break;
         case 6: on_saveButton_clicked(); break;
-        case 7: refreshSlot(); break;
+        case 7: on_colorButton_clicked(); break;
+        case 8: refreshSlot(); break;
         default: ;
         }
-        _id -= 8;
+        _id -= 9;
     }
     return _id;
 }

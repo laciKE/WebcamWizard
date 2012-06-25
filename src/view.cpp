@@ -183,3 +183,8 @@ void View::on_saveButton_clicked()
     cvSaveImage(saveFilename.toAscii(),img);
     }
 }
+
+void View::on_colorButton_clicked()
+{
+     QColor test = QColorDialog::getColor (Qt::white, this);
+}
