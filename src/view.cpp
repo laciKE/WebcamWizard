@@ -82,6 +82,8 @@ qimg = IplImage2QImage(img);
 this->camera->setPixmap(QPixmap::fromImage(*qimg));
 delete qimg;
 cvReleaseImage(&img);
+//QApplication::flush();
+QCoreApplication::processEvents();
 }
 
 void View::refreshSlot() {
@@ -97,7 +99,9 @@ void View::on_pushButton_clicked()
 }
 
 void View::debug(QString str) {
+    qDebug() << str;
     debugOutput->append(str);
+    QCoreApplication::processEvents();
 }
 
 int View::getDesktopWidth(){

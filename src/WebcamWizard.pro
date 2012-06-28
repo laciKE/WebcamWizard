@@ -4,7 +4,7 @@
 
 CONFIG +=link_pkgconfig
 TEMPLATE = app
-TARGET = 
+TARGET = ../bin/WebcamWizard
 DEPENDPATH += .
 LIBS += 
 INCLUDEPATH += .

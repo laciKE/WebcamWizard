@@ -1,14 +1,19 @@
-#include <cstdio>
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <opencv/ml.h>
-#include <iostream>
+#include <QWaitCondition>
+#include <QMutex>
 #include "model.hpp"
 #include "calibrator.hpp"
 
 using namespace std;
 
-/*TODO urobit timer namiesto cvwaitKey, kt. nefunguje*/
+/*custom sleep, because cvWaitKey doesn't work in Qt application */
+void sleep(int ms){
+	QWaitCondition sleepCond;
+	QMutex mutex;
+	sleepCond.wait(&mutex, ms);
+}
 
 
 int thresh = 10;
@@ -129,10 +134,10 @@ int Calibrator::calibrate()
     model->setBlackBoardImage(desktop);
     //cvShowImage(blackBoard->blackBoardWindow, desktop);
 
-    //wait 250ms
-    //debug("zacinam cakat 25s");
-    cvWaitKey(250);
-    //debug("skoncil som");
+    //wait 2000ms
+    debug("biela plocha, zacinam cakat 2000ms");
+    sleep(2000);
+    debug("skoncil som");
 
     //capture frame from webcam
     IplImage* frame = cvQueryFrame(model->webcam);
@@ -164,7 +169,7 @@ int Calibrator::calibrate()
     //cerr << "frame" << endl;
 
     // wait 1s
-    cvWaitKey(1000);
+    //sleep(1000);
 
     // function DetectAntDrawQuads need storage
     // init storage
@@ -174,8 +179,9 @@ int Calibrator::calibrate()
     //cvShowImage(blackBoard->blackBoardWindow, DetectAndDrawQuads(frame_bw));
     model->setBlackBoardImage(DetectAndDrawQuads(frame_bw));
     // wait 2s
-    cvWaitKey(2000);
-
+    debug("najdeny obdlznik, cakam 1000ms");
+    sleep(1000);
+    debug("skoncil som");
     // fixed problem with sequence of calib
     int minxy=500600;
     int mini=0;
