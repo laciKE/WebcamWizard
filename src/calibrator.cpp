@@ -104,9 +104,15 @@ IplImage* Calibrator::DetectAndDrawQuads(IplImage* img)
 
 
     cvReleaseMemStorage(&storage);
-    IplImage *resizedRet = cvCreateImage(cvSize(model->blackBoardWidth, model->blackBoardHeight),8,1);
-    cvResize(ret,resizedRet);
+
+    IplImage *colorRet = cvCreateImage(cvGetSize(ret),8,3);
+    cvCvtColor(ret,colorRet,CV_GRAY2RGB);
     cvReleaseImage(&ret);
+
+    IplImage *resizedRet = cvCreateImage(cvSize(model->blackBoardWidth, model->blackBoardHeight),8,3);
+    cvResize(colorRet,resizedRet);
+    cvReleaseImage(&colorRet);
+
     return resizedRet;
 }
 
@@ -177,11 +183,18 @@ int Calibrator::calibrate()
 
     // show frame with rectangle
     //cvShowImage(blackBoard->blackBoardWindow, DetectAndDrawQuads(frame_bw));
-    model->setBlackBoardImage(DetectAndDrawQuads(frame_bw));
+
+    IplImage *quads = DetectAndDrawQuads(frame_bw);	    
+    cvReleaseImage(&frame_bw);
+/*    model->setBlackBoardImage(quads);
+   
     // wait 2s
     debug("najdeny obdlznik, cakam 1000ms");
     sleep(1000);
     debug("skoncil som");
+*/
+    cvReleaseImage(&quads);
+   
     // fixed problem with sequence of calib
     int minxy=500600;
     int mini=0;
