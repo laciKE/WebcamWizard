@@ -12,7 +12,7 @@ typedef struct {
 class Calibrator {
 private:
 	class Model* model;
-	IplImage* DetectAndDrawQuads(IplImage* img);
+        void DetectAndDrawQuads(IplImage* img);
 	void debug(const char *str);
 
 public:
