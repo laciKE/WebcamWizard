@@ -18,7 +18,7 @@ protected:
 	void drawLine(CvPoint A, CvPoint B, IplImage* img);
 public:
         virtual void Init(){};
-        virtual void drawPath(IplImage* frame, IplImage* desktop){};
+        virtual void drawPath(IplImage* /*frame*/, IplImage* /*desktop*/){};
 	PathFinder(Model *m);
 	~PathFinder();
 };

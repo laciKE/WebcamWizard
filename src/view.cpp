@@ -22,7 +22,8 @@ for (int y = 0; y < h; y++, data += iplImg->widthStep)
 {
 for (int x = 0; x < w; x++)
 {
-char r, g, b, a = 0;
+char r, g, b, a;
+r = g = b = a = 0;
 if (channels == 1)
 {
 r = data[x * channels];
@@ -53,6 +54,7 @@ return qimg;
 
 View::View(QWidget *parent)
 {
+	Q_UNUSED(parent);
         setupUi(this); // this sets up GUI
         debugWidget->hide();
         debugWidget->setFeatures(QDockWidget::DockWidgetMovable);

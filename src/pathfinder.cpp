@@ -221,7 +221,7 @@ void PathFinderFitLine::Init() {
 */
 void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop){
 	int W = frame->widthStep;
-	int H = frame->height;
+	//int H = frame->height;
 	int x, y, numOfPoints=0;
 	cvClearSeq(point_seq);
 	float line[4];
