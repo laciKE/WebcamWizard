@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'webcamWizard.ui'
 **
-** Created: Thu Jun 28 19:36:23 2012
+** Created: Thu Jun 28 21:05:59 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,6 +19,7 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpinBox>
 #include <QtGui/QTextEdit>
 #include <QtGui/QWidget>
 
@@ -32,14 +33,15 @@ public:
     QPushButton *saveButton;
     QPushButton *loadButton;
     QPushButton *clearButton;
-    QPushButton *colorButton;
     QPushButton *aboutButton;
     QPushButton *debugButton;
-    QComboBox *comboBox;
     QDockWidget *debugWidget;
     QWidget *dock;
     QLabel *camera;
     QTextEdit *debugOutput;
+    QSpinBox *spinBox;
+    QPushButton *colorButton;
+    QComboBox *strategyBox;
 
     void setupUi(QWidget *Form)
     {
@@ -128,18 +130,12 @@ public:
         clearButton = new QPushButton(Form);
         clearButton->setObjectName(QString::fromUtf8("clearButton"));
         clearButton->setGeometry(QRect(280, 10, 81, 31));
-        colorButton = new QPushButton(Form);
-        colorButton->setObjectName(QString::fromUtf8("colorButton"));
-        colorButton->setGeometry(QRect(360, 10, 81, 31));
         aboutButton = new QPushButton(Form);
         aboutButton->setObjectName(QString::fromUtf8("aboutButton"));
         aboutButton->setGeometry(QRect(760, 10, 81, 31));
         debugButton = new QPushButton(Form);
         debugButton->setObjectName(QString::fromUtf8("debugButton"));
         debugButton->setGeometry(QRect(660, 10, 91, 31));
-        comboBox = new QComboBox(Form);
-        comboBox->setObjectName(QString::fromUtf8("comboBox"));
-        comboBox->setGeometry(QRect(460, 10, 181, 31));
         debugWidget = new QDockWidget(Form);
         debugWidget->setObjectName(QString::fromUtf8("debugWidget"));
         debugWidget->setEnabled(true);
@@ -160,6 +156,17 @@ public:
         debugOutput->setGeometry(QRect(350, 0, 151, 241));
         debugOutput->setReadOnly(true);
         debugWidget->setWidget(dock);
+        spinBox = new QSpinBox(Form);
+        spinBox->setObjectName(QString::fromUtf8("spinBox"));
+        spinBox->setGeometry(QRect(380, 12, 41, 27));
+        spinBox->setMinimum(1);
+        spinBox->setMaximum(10);
+        colorButton = new QPushButton(Form);
+        colorButton->setObjectName(QString::fromUtf8("colorButton"));
+        colorButton->setGeometry(QRect(425, 10, 81, 31));
+        strategyBox = new QComboBox(Form);
+        strategyBox->setObjectName(QString::fromUtf8("strategyBox"));
+        strategyBox->setGeometry(QRect(510, 10, 141, 31));
 
         retranslateUi(Form);
 
@@ -174,7 +181,6 @@ public:
         saveButton->setText(QApplication::translate("Form", "Save", 0, QApplication::UnicodeUTF8));
         loadButton->setText(QApplication::translate("Form", "Load", 0, QApplication::UnicodeUTF8));
         clearButton->setText(QApplication::translate("Form", "Clear", 0, QApplication::UnicodeUTF8));
-        colorButton->setText(QApplication::translate("Form", "Color", 0, QApplication::UnicodeUTF8));
         aboutButton->setText(QApplication::translate("Form", "About", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         debugButton->setToolTip(QString());
@@ -182,6 +188,7 @@ public:
         debugButton->setText(QApplication::translate("Form", "Debug", 0, QApplication::UnicodeUTF8));
         debugWidget->setWindowTitle(QString());
         camera->setText(QString());
+        colorButton->setText(QApplication::translate("Form", "Color", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -126,6 +126,7 @@ void Model::Init() {
 	cvMoveWindow(blackBoardWindow, 0, 0);
 */
 	color = CV_RGB(0, 255, 255);
+        thickness = 1;
 	clear();
 
 	//cvSetWindowProperty("Model",CV_WND_PROP_FULLSCREEN,0);

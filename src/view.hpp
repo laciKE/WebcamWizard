@@ -33,6 +33,8 @@ private slots:
                 void on_saveButton_clicked();
                 void on_colorButton_clicked();
 
+                void on_spinBox_valueChanged(int arg1);
+
 public slots:
                 void refreshSlot();
 };

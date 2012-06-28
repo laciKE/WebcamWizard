@@ -188,3 +188,8 @@ void View::on_colorButton_clicked()
      QColor color = QColorDialog::getColor (Qt::white, this);
      model->setColor(CV_RGB(color.red(), color.green(), color.blue()));
 }
+
+void View::on_spinBox_valueChanged(int thickness)
+{
+    model->setThickness(thickness);
+}
