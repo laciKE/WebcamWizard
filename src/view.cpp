@@ -64,12 +64,18 @@ View::View(QWidget *parent)
         timer = new QTimer(this);
         model = new Model(this);
         model->Init();
- 	PathFinder *pH = new PathFinderFitLine(model);
-   	model->setPathFinder(pH);
+        //PathFinder *pH = new PathFinderFitLine(model);
+        //model->setPathFinder(pH);
     
         connect(timer, SIGNAL(timeout()), this, SLOT(refreshSlot()));
 
 
+}
+
+View::~View(){
+    timer->stop();
+    delete timer;
+    delete model;
 }
 
 void View::refresh(){ // timer call refresh
@@ -200,3 +206,9 @@ void View::on_spinBox_valueChanged(int thickness)
 {
     model->setThickness(thickness);
 }
+
+void View::on_strategyBox_currentIndexChanged(int index)
+{
+    model->setTool(index);
+}
+

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'webcamWizard.ui'
 **
-** Created: Thu Jun 28 21:05:59 2012
+** Created: Thu Jun 28 21:50:49 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -48,6 +48,8 @@ public:
         if (Form->objectName().isEmpty())
             Form->setObjectName(QString::fromUtf8("Form"));
         Form->resize(880, 670);
+        Form->setMinimumSize(QSize(880, 670));
+        Form->setMaximumSize(QSize(880, 670));
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -167,8 +169,12 @@ public:
         strategyBox = new QComboBox(Form);
         strategyBox->setObjectName(QString::fromUtf8("strategyBox"));
         strategyBox->setGeometry(QRect(510, 10, 141, 31));
+        strategyBox->setModelColumn(0);
 
         retranslateUi(Form);
+
+        strategyBox->setCurrentIndex(2);
+
 
         QMetaObject::connectSlotsByName(Form);
     } // setupUi
@@ -189,6 +195,12 @@ public:
         debugWidget->setWindowTitle(QString());
         camera->setText(QString());
         colorButton->setText(QApplication::translate("Form", "Color", 0, QApplication::UnicodeUTF8));
+        strategyBox->clear();
+        strategyBox->insertItems(0, QStringList()
+         << QApplication::translate("Form", "All pixels", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("Form", "Max square", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("Form", "Fit line", 0, QApplication::UnicodeUTF8)
+        );
     } // retranslateUi
 
 };

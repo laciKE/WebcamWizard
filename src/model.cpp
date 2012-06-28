@@ -130,9 +130,9 @@ void Model::Init() {
 */
 	color = CV_RGB(0, 255, 255);
         thickness = 1;
-	pathFinder[0] = new PathFinderAllRed;
-	pathFinder[1] = new PathFinderMaxSquare;
-	pathFinder[2] = new PathFinderFitLine;
+        pathFinder[0] = new PathFinderAllRed(this);
+        pathFinder[1] = new PathFinderMaxSquare(this);
+        pathFinder[2] = new PathFinderFitLine(this);
 	tool = 2;
 
 	pathFinder[tool]->Init();

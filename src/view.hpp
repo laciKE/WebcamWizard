@@ -17,6 +17,7 @@ class View : public QWidget, private Ui::Form
         public:
 
 		View(QWidget *parent = 0);
+                ~View();
                 void refresh();
 		void debug(QString str);
 		int getDesktopWidth();
@@ -32,8 +33,8 @@ private slots:
                 void on_loadButton_clicked();
                 void on_saveButton_clicked();
                 void on_colorButton_clicked();
-
                 void on_spinBox_valueChanged(int arg1);
+                void on_strategyBox_currentIndexChanged(int index);
 
 public slots:
                 void refreshSlot();
