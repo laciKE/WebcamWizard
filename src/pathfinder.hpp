@@ -18,7 +18,7 @@ protected:
 	//void drawLine(CvPoint A, CvPoint B, IplImage* img);
 public:
         virtual void Init(){};
-        virtual void drawPath(IplImage* /*frame*/, IplImage* /*desktop*/, const CvScalar& /*color*/ ){};
+        virtual void drawPath(IplImage* /*frame*/, IplImage* /*desktop*/, const CvScalar& /*color*/, int /*thickness*/ ){};
 	PathFinder(Model *m);
 	~PathFinder();
 };
@@ -28,7 +28,7 @@ class PathFinderAllRed: public PathFinder {
 private:
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color);
+	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness);
 	PathFinderAllRed(Model *m);
 	~PathFinderAllRed();
 };
@@ -39,7 +39,7 @@ private:
 	CvPoint lastPoint;	
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color);
+	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness);
 	PathFinderMaxSquare(Model *m);
 	~PathFinderMaxSquare();
 };
@@ -51,7 +51,7 @@ private:
 	CvPoint lastPoint;	
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color);
+	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness);
 	PathFinderFitLine(Model *m);
 	~PathFinderFitLine();
 };

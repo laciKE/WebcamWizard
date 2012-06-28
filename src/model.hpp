@@ -16,6 +16,7 @@ private:
 	class View *view;
 	class PathFinder *pathFinder;
 	CvScalar color;
+	int thickness;
 
 public:
 	class Calibrator *calibrator; //TODO getCalibrationData
@@ -25,6 +26,7 @@ public:
 	int update();
 	//actions on model
 	void setColor(const CvScalar& color);
+	void setThickness(int thickness);
 	void setTool();
 	void setPathFinder(PathFinder *pF);
 	void clear();

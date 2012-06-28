@@ -19,18 +19,22 @@ int Model::update() {
 	if (!pathFinder)
 		return 0;
 
-	pathFinder->drawPath(frame, blackBoardImage, color);
+	pathFinder->drawPath(frame, blackBoardImage, color, thickness);
 
 	//cvShowImage(blackBoardWindow, blackBoardImage);
 
 	return 1;
 }
 
+void Model::setThickness(int thickness) {
+	this->thickness = thickness;
+}
+
 void Model::setColor(const CvScalar& color) {
 	this->color = color;
 }
 
-void Model::setTool(){
+void Model::setTool() {
 
 }
 

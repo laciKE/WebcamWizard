@@ -101,7 +101,7 @@ void PathFinderAllRed::Init() {
 	model->debug("PathFinderAllRed");
 }
 
-void PathFinderAllRed::drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color){
+void PathFinderAllRed::drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness){
 	int W = frame->widthStep;
 	int H = frame->height;
 	int x, y;
@@ -113,7 +113,7 @@ void PathFinderAllRed::drawPath(IplImage* frame, IplImage* desktop, const CvScal
 			if (isLightPen(R, G, B)) {
 				CvPoint pixel = getDesktopCoords(x / 3, y);
 				//drawPoint(pixel,desktop);
-				cvLine(desktop, pixel, pixel, color);
+				cvLine(desktop, pixel, pixel, color, thickness);
 			}
 		}
 }
@@ -134,7 +134,7 @@ void PathFinderMaxSquare::Init() {
 	model->debug("PathFinderMaxSquare");
 }
 
-void PathFinderMaxSquare::drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color){
+void PathFinderMaxSquare::drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness){
 	int W = frame->widthStep;
 	int H = frame->height;
 	int x, y;
@@ -162,10 +162,10 @@ void PathFinderMaxSquare::drawPath(IplImage* frame, IplImage* desktop, const CvS
 		CvPoint pixel=getDesktopCoords(maxX-maxVal/2,maxY-maxVal/2);
 		if(lastPoint.x>0)
 			//drawLine(lastPoint,pixel,desktop);
-			cvLine(desktop, lastPoint, pixel, color);
+			cvLine(desktop, lastPoint, pixel, color, thickness);
 		else
 			//drawPoint(pixel,desktop);
-			cvLine(desktop, pixel, pixel, color);
+			cvLine(desktop, pixel, pixel, color, thickness);
 
 		lastPoint=pixel;
 //		cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
@@ -225,7 +225,7 @@ void PathFinderFitLine::Init() {
 	for(int i=0; i<4; i++)
 		cerr << line[i] << endl;
 */
-void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color){
+void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness){
 	int W = frame->widthStep;
 	//int H = frame->height;
 	int x, y, numOfPoints=0;
@@ -252,10 +252,10 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop, const CvSca
 		CvPoint pixel=getDesktopCoords(line[2],line[3]);
 		if(lastPoint.x>0)
 			//drawLine(lastPoint,pixel,desktop);
-			cvLine(desktop, lastPoint, pixel, color);
+			cvLine(desktop, lastPoint, pixel, color, thickness);
 		else
 			//drawPoint(pixel,desktop);
-			cvLine(desktop, pixel, pixel, color);
+			cvLine(desktop, pixel, pixel, color, thickness);
 
 		lastPoint=pixel;
 		//cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
