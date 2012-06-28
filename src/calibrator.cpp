@@ -32,12 +32,12 @@ double angle( CvPoint* pt1, CvPoint* pt2, CvPoint* pt0 )
 
 // function from examples opencv (squares.c)
 
-IplImage* Calibrator::DetectAndDrawQuads(IplImage* img)
+void Calibrator::DetectAndDrawQuads(IplImage* img)
 {
     CvSeq* contours;
     CvSeq* result;
     CvMemStorage *storage = cvCreateMemStorage(0);
-    IplImage* ret = cvCreateImage(cvGetSize(img), 8, 1);
+   // IplImage* ret = cvCreateImage(cvGetSize(img), 8, 1);
     cvFindContours(img, storage, &contours, sizeof(CvContour), CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE, cvPoint(0,0));
 
     while( contours )
@@ -90,10 +90,10 @@ IplImage* Calibrator::DetectAndDrawQuads(IplImage* img)
                 }
 
                 // draw rectangle
-                cvLine(ret, *pt[0], *pt[1], cvScalar(255));
-                cvLine(ret, *pt[1], *pt[2], cvScalar(255));
-                cvLine(ret, *pt[2], *pt[3], cvScalar(255));
-                cvLine(ret, *pt[3], *pt[0], cvScalar(255));
+                //cvLine(ret, *pt[0], *pt[1], cvScalar(255));
+                //cvLine(ret, *pt[1], *pt[2], cvScalar(255));
+                //cvLine(ret, *pt[2], *pt[3], cvScalar(255));
+                //cvLine(ret, *pt[3], *pt[0], cvScalar(255));
             }
 
         }
@@ -104,7 +104,7 @@ IplImage* Calibrator::DetectAndDrawQuads(IplImage* img)
 
 
     cvReleaseMemStorage(&storage);
-
+    /*
     IplImage *colorRet = cvCreateImage(cvGetSize(ret),8,3);
     cvCvtColor(ret,colorRet,CV_GRAY2RGB);
     cvReleaseImage(&ret);
@@ -112,8 +112,8 @@ IplImage* Calibrator::DetectAndDrawQuads(IplImage* img)
     IplImage *resizedRet = cvCreateImage(cvSize(model->blackBoardWidth, model->blackBoardHeight),8,3);
     cvResize(colorRet,resizedRet);
     cvReleaseImage(&colorRet);
-
-    return resizedRet;
+    */
+    //return ret;
 }
 
 //calibration of desktop
@@ -182,19 +182,28 @@ int Calibrator::calibrate()
     storage = cvCreateMemStorage(0);
 
     // show frame with rectangle
-    //cvShowImage(blackBoard->blackBoardWindow, DetectAndDrawQuads(frame_bw));
 
-    IplImage *quads = DetectAndDrawQuads(frame_bw);	    
+
+
+    DetectAndDrawQuads(frame_bw);
     cvReleaseImage(&frame_bw);
-/*    model->setBlackBoardImage(quads);
-   
+
+    /*
+    cvNamedWindow("test", CV_WINDOW_AUTOSIZE);
+    cvMoveWindow("test", 600, 0);
+    cvShowImage("test", quads);
+    */
+    /*
+    model->setBlackBoardImage(quads);
+
     // wait 2s
     debug("najdeny obdlznik, cakam 1000ms");
-    sleep(1000);
+    sleep(5000);
     debug("skoncil som");
-*/
+
     cvReleaseImage(&quads);
-   
+    */
+
     // fixed problem with sequence of calib
     int minxy=500600;
     int mini=0;
@@ -256,7 +265,25 @@ int Calibrator::calibrate()
     }
     else
     {
-        debug("Calibration succesfull."); //cerr << "Calibration succesfull." << endl;
+        debug("Calibration succesfull."); //cerr << "Calibration succesfull." << endl
+        IplImage *quads = cvCreateImage(cvSize(model->blackBoardWidth, model->blackBoardHeight),8,3);
+        int W = quads->widthStep;
+        int H = quads->height;
+        int x, y;
+
+        for (y = 0; y < H; y++)
+            for (x = 0; x < W; x++ )
+            {
+                quads->imageData[y * W + x] = 0;
+            }
+
+        cvLine(quads, calibrationData.vertex[0], calibrationData.vertex[1], CV_RGB(255,255,255));
+        cvLine(quads, calibrationData.vertex[1], calibrationData.vertex[2], CV_RGB(255,255,255));
+        cvLine(quads, calibrationData.vertex[2], calibrationData.vertex[3], CV_RGB(255,255,255));
+        cvLine(quads, calibrationData.vertex[3], calibrationData.vertex[0], CV_RGB(255,255,255));
+        model->setBlackBoardImage(quads);
+        cvReleaseImage(&quads);
+
         QMessageBox msgBox;
         msgBox.setWindowTitle("Calibration");
         msgBox.setText("Calibration succesfull.");
