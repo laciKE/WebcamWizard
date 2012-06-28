@@ -167,6 +167,7 @@ void View::on_loadButton_clicked()
     if (!openFilename.isNull()) {
     IplImage* img = cvLoadImage(openFilename.toAscii());
     model->setBlackBoardImage(img);
+
     }
     //debug(filename);
 }
@@ -180,6 +181,12 @@ void View::on_saveButton_clicked()
         }
     IplImage* img = model->getBlackBoardImage();
     cvSaveImage(saveFilename.toAscii(),img);
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Save image");
+    msgBox.setText("Image saved.");
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.exec();
     }
 }
 
