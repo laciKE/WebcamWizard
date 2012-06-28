@@ -14,10 +14,12 @@ private:
 	IplImage *blackBoardImage;
 	IplImage *webcamImage;
 	class View *view;
-	class PathFinder *pathFinder;
 	CvScalar color;
+	CvScalar bgColor;
 	int thickness;
-
+	const static int numberOfPathFinders = 3;
+	class PathFinder *pathFinder[numberOfPathFinders];
+	int tool;
 public:
 	class Calibrator *calibrator; //TODO getCalibrationData
 	int blackBoardWidth;
@@ -27,8 +29,8 @@ public:
 	//actions on model
 	void setColor(const CvScalar& color);
 	void setThickness(int thickness);
-	void setTool();
-	void setPathFinder(PathFinder *pF);
+	void setTool(int tool);
+	//void setPathFinder(PathFinder *pF);
 	void clear();
 	int calibrate();
 	void debug(const char *str);

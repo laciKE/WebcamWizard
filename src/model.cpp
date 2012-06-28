@@ -19,7 +19,7 @@ int Model::update() {
 	if (!pathFinder)
 		return 0;
 
-	pathFinder->drawPath(frame, blackBoardImage, color, thickness);
+	pathFinder[tool]->drawPath(frame, blackBoardImage, color, thickness);
 
 	//cvShowImage(blackBoardWindow, blackBoardImage);
 
@@ -34,8 +34,9 @@ void Model::setColor(const CvScalar& color) {
 	this->color = color;
 }
 
-void Model::setTool() {
-
+void Model::setTool(int tool) {
+	this->tool = tool;
+	pathFinder[tool]->Init();
 }
 
 void Model::clear(){
@@ -67,14 +68,16 @@ void Model::setBlackBoardImage(IplImage *img ){
 	blackBoardImage = cvCloneImage(img);
 	view->refresh();
 }
-
+/*
 void Model::setPathFinder(class PathFinder* pF){
 	pathFinder = pF;
 	pathFinder->Init();
 }
-
+*/
 Model::~Model() {
 	delete calibrator;
+	for(int i = 0; i < numberOfPathFinders; i++)
+		delete pathFinder[i];
 	//delete desktopDrawer;
 	cvReleaseCapture(&webcam);
 	cvReleaseImage(&blackBoardImage);
@@ -127,6 +130,13 @@ void Model::Init() {
 */
 	color = CV_RGB(0, 255, 255);
         thickness = 1;
+	pathFinder[0] = new PathFinderAllRed;
+	pathFinder[1] = new PathFinderMaxSquare;
+	pathFinder[2] = new PathFinderFitLine;
+	tool = 2;
+
+	pathFinder[tool]->Init();
+
 	clear();
 
 	//cvSetWindowProperty("Model",CV_WND_PROP_FULLSCREEN,0);
