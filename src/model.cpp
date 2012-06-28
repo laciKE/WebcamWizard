@@ -19,11 +19,15 @@ int Model::update() {
 	if (!pathFinder)
 		return 0;
 
-	pathFinder->drawPath(frame, blackBoardImage);
+	pathFinder->drawPath(frame, blackBoardImage, color);
 
 	//cvShowImage(blackBoardWindow, blackBoardImage);
 
 	return 1;
+}
+
+void Model::setColor(const CvScalar& color) {
+	this->color = color;
 }
 
 void Model::setTool(){
@@ -117,6 +121,7 @@ void Model::Init() {
 	//cvMoveWindow(blackBoardWindow, 328, 0);
 	cvMoveWindow(blackBoardWindow, 0, 0);
 */
+	color = CV_RGB(0, 255, 255);
 	clear();
 
 	//cvSetWindowProperty("Model",CV_WND_PROP_FULLSCREEN,0);

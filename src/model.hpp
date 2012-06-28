@@ -15,6 +15,7 @@ private:
 	IplImage *webcamImage;
 	class View *view;
 	class PathFinder *pathFinder;
+	CvScalar color;
 
 public:
 	class Calibrator *calibrator; //TODO getCalibrationData
@@ -23,6 +24,7 @@ public:
 	CvCapture *webcam;
 	int update();
 	//actions on model
+	void setColor(const CvScalar& color);
 	void setTool();
 	void setPathFinder(PathFinder *pF);
 	void clear();

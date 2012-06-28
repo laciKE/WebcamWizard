@@ -14,11 +14,11 @@ protected:
 	CvPoint getDesktopCoords(int x, int y);
 	Model *model;
 	bool isLightPen(int R, int G, int B);
-	void drawPoint(CvPoint A, IplImage* img);
-	void drawLine(CvPoint A, CvPoint B, IplImage* img);
+	//void drawPoint(CvPoint A, IplImage* img);
+	//void drawLine(CvPoint A, CvPoint B, IplImage* img);
 public:
         virtual void Init(){};
-        virtual void drawPath(IplImage* /*frame*/, IplImage* /*desktop*/){};
+        virtual void drawPath(IplImage* /*frame*/, IplImage* /*desktop*/, const CvScalar& /*color*/ ){};
 	PathFinder(Model *m);
 	~PathFinder();
 };
@@ -28,7 +28,7 @@ class PathFinderAllRed: public PathFinder {
 private:
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop);
+	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color);
 	PathFinderAllRed(Model *m);
 	~PathFinderAllRed();
 };
@@ -39,7 +39,7 @@ private:
 	CvPoint lastPoint;	
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop);
+	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color);
 	PathFinderMaxSquare(Model *m);
 	~PathFinderMaxSquare();
 };
@@ -51,7 +51,7 @@ private:
 	CvPoint lastPoint;	
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop);
+	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color);
 	PathFinderFitLine(Model *m);
 	~PathFinderFitLine();
 };

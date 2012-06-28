@@ -64,6 +64,9 @@ View::View(QWidget *parent)
         timer = new QTimer(this);
         model = new Model(this);
         model->Init();
+ 	PathFinder *pH = new PathFinderFitLine(model);
+   	model->setPathFinder(pH);
+    
         connect(timer, SIGNAL(timeout()), this, SLOT(refreshSlot()));
 
 
@@ -90,12 +93,6 @@ void View::refreshSlot() {
     model->update();
     refresh();
    //debugView->refresh();
-}
-
-
-void View::on_pushButton_clicked()
-{
-
 }
 
 void View::debug(QString str) {
@@ -128,11 +125,7 @@ void View::on_calibrateButton_clicked()
 {
     model->calibrate();
 
-    /*docasne kod kvoli testovaniu */
-    //TODO spravit casovac na update
-    PathFinder *pH = new PathFinderFitLine(model);
-    model->setPathFinder(pH);
-    //debugOutput->append(QString("chcem bezat")); //std::cerr << " chcem bezat\n";
+   //debugOutput->append(QString("chcem bezat")); //std::cerr << " chcem bezat\n";
     //bool run = 1;
     timer->start(33);
 
@@ -192,5 +185,6 @@ void View::on_saveButton_clicked()
 
 void View::on_colorButton_clicked()
 {
-     QColor test = QColorDialog::getColor (Qt::white, this);
+     QColor color = QColorDialog::getColor (Qt::white, this);
+     model->setColor(CV_RGB(color.red(), color.green(), color.blue()));
 }

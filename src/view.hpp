@@ -25,20 +25,12 @@ class View : public QWidget, private Ui::Form
 
 
 private slots:
-                void on_pushButton_clicked();
-
                 void on_debugButton_clicked();
-
                 void on_calibrateButton_clicked();
-
                 void on_clearButton_clicked();
-
                 void on_aboutButton_clicked();
-
                 void on_loadButton_clicked();
-
                 void on_saveButton_clicked();
-
                 void on_colorButton_clicked();
 
 public slots:
