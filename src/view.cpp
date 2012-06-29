@@ -72,7 +72,7 @@ View::View(Model *model, QWidget *parent)
 View::~View(){
     timer->stop();
     delete timer;
-    delete model;
+    //delete model;
 }
 
 void View::refresh(){ // timer call refresh
