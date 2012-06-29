@@ -6,21 +6,21 @@
 #include "model.hpp"
 
 typedef struct {
-        CvPoint vertex[4];
+	CvPoint vertex[4];
 } CalibrationData;
 
 class Calibrator {
 private:
-	class Model* model;
-        void DetectAndDrawQuads(IplImage* img);
+	class Model *model;
+	void DetectAndDrawQuads(IplImage *img);
 	void debug(const char *str);
 
 public:
-        //coordinates of blackboard's corners in webcam
-        CalibrationData calibrationData;
-        Calibrator(Model* parent);
-        ~Calibrator();
-        int calibrate();
+	//coordinates of blackboard's corners in webcam
+	CalibrationData calibrationData;
+	Calibrator(Model *parent);
+	~Calibrator();
+	int calibrate();
 };
 
 #endif

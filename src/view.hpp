@@ -16,7 +16,7 @@ class View : public QWidget, private Ui::Form
 
         public:
 
-		View(QWidget *parent = 0);
+		View(Model *model, QWidget *parent = 0);
                 ~View();
                 void refresh();
 		void debug(QString str);

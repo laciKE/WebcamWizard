@@ -39,9 +39,10 @@ public:
 	IplImage *getWebcamImage();
 	void setBlackBoardImage(IplImage *img);
 	char blackBoardWindow[64], webcamWindow[64];
+	void registerView(View *view);
 	void Init();
-	Model(View *parent);
-	//Model();
+	//Model(View *parent);
+	Model();
 	~Model();
 };
 

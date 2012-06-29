@@ -52,7 +52,7 @@ return qimg;
 
 }
 
-View::View(QWidget *parent)
+View::View(Model *model, QWidget *parent)
 {
 	Q_UNUSED(parent);
         setupUi(this); // this sets up GUI
@@ -62,11 +62,8 @@ View::View(QWidget *parent)
         //debugWidget->mouseGrabber()
         desktop->setStyleSheet("QLabel { background-color : black; color : blue; }");
         timer = new QTimer(this);
-        model = new Model(this);
-        model->Init();
-        //PathFinder *pH = new PathFinderFitLine(model);
-        //model->setPathFinder(pH);
-    
+	this->model = model;
+    	
         connect(timer, SIGNAL(timeout()), this, SLOT(refreshSlot()));
 
 
@@ -169,7 +166,7 @@ void View::on_aboutButton_clicked()
 
 void View::on_loadButton_clicked()
 {
-    QString openFilename = QFileDialog::getOpenFileName( this, tr("Open Image"), QDir::currentPath(), tr("Image files (*.jpg);;All files (*.*)"), 0, QFileDialog::DontUseNativeDialog );
+    QString openFilename = QFileDialog::getOpenFileName( this, tr("Open Image"), QDir::currentPath(), tr("Image files (*.jpg)"), 0, QFileDialog::DontUseNativeDialog );
     if (!openFilename.isNull()) {
     IplImage* img = cvLoadImage(openFilename.toAscii());
     model->setBlackBoardImage(img);
@@ -180,7 +177,7 @@ void View::on_loadButton_clicked()
 
 void View::on_saveButton_clicked()
 {
-    QString saveFilename = QFileDialog::getSaveFileName( this, tr("Save Image"), QDir::currentPath(),tr("Documents (*.jpg)"), 0, QFileDialog::DontUseNativeDialog );
+    QString saveFilename = QFileDialog::getSaveFileName( this, tr("Save Image"), QDir::currentPath(),tr("Image files (*.jpg)"), 0, QFileDialog::DontUseNativeDialog );
     if (!saveFilename.isNull()) {
         if (!saveFilename.contains(".jpg")) {
             saveFilename.append(".jpg");
