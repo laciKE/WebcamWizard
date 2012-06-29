@@ -255,19 +255,21 @@ int Calibrator::calibrate() {
 		int H = quads->height;
 		int x, y;
 
-		for (y = 0; y < H; y++)
+/*		for (y = 0; y < H; y++)
 			for (x = 0; x < W; x++) {
 				quads->imageData[y * W + x] = 0;
 			}
+*/
+		cvLine(frame, calibrationData.vertex[0], calibrationData.vertex[1],
+				CV_RGB(255, 255, 255));
+		cvLine(frame, calibrationData.vertex[1], calibrationData.vertex[2],
+				CV_RGB(255, 255, 255));
+		cvLine(frame, calibrationData.vertex[2], calibrationData.vertex[3],
+				CV_RGB(255, 255, 255));
+		cvLine(frame, calibrationData.vertex[3], calibrationData.vertex[0],
+				CV_RGB(255, 255, 255));
+		cvResize(frame,quads);
 
-		cvLine(quads, calibrationData.vertex[0], calibrationData.vertex[1],
-				CV_RGB(255, 255, 255));
-		cvLine(quads, calibrationData.vertex[1], calibrationData.vertex[2],
-				CV_RGB(255, 255, 255));
-		cvLine(quads, calibrationData.vertex[2], calibrationData.vertex[3],
-				CV_RGB(255, 255, 255));
-		cvLine(quads, calibrationData.vertex[3], calibrationData.vertex[0],
-				CV_RGB(255, 255, 255));
 		model->setBlackBoardImage(quads);
 		cvReleaseImage(&quads);
 

@@ -34,6 +34,7 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 			l = p;
 	}
 	result.x = model->blackBoardWidth * l;
+	float l0 = l;
 	//cerr << l << " ";
 	//y coordinate
 	l = 0;
@@ -56,12 +57,15 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 	result.y = model->blackBoardHeight * (1 - l);
 	//cerr << 1-l << endl;
 	//cerr << "input: [" << C.x << ", " << C.y << "]  output: [" << result.x << ", " << result.y << "]\n";
+	if((l<2*epsilon) || (l>1-2*epsilon) || (l0<2*epsilon) || (l0>1-2*epsilon)){
+		result.x = result.y = 0;
+	}		
 	return result;
 }
 
 inline bool PathFinder::isLightPen(int R, int G, int B) {
         //return ((R > 220) && (R > (G + B) * 2 / 3));
-        return ((B > 220) && (B > (G + R) * 2 / 3));
+        return ((B > 245) && (B > (G + R) * 3 / 4));
 }
 /*
 inline void PathFinder::drawPoint(CvPoint A, IplImage* img) {
@@ -238,7 +242,7 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop, const CvSca
 			int R = (unsigned char) frame->imageData[y * W + x + 2];
 			int G = (unsigned char) frame->imageData[y * W + x + 1];
 			int B = (unsigned char) frame->imageData[y * W + x];
-			if (isLightPen(R, G, B)){
+			if (isLightPen(R, G, B) && (getDesktopCoords(x/3,y).x>0)){
 				points.push_back(cvPoint2D32f(x/3,y));
 				cvSeqPush(point_seq,&points[numOfPoints++]);
 			}
@@ -250,6 +254,8 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop, const CvSca
 		//	cerr << line[i] << " ";
 
 		CvPoint pixel=getDesktopCoords(line[2],line[3]);
+		if(pixel.x>0){
+		
 		if(lastPoint.x>0)
 			//drawLine(lastPoint,pixel,desktop);
 			cvLine(desktop, lastPoint, pixel, color, thickness);
@@ -258,6 +264,7 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop, const CvSca
 			cvLine(desktop, pixel, pixel, color, thickness);
 
 		lastPoint=pixel;
+		}
 		//cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
 	 } else {
 	 	lastPoint=cvPoint(-1,-1);
