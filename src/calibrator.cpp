@@ -168,7 +168,7 @@ int Calibrator::calibrate()
 	IplImage *frame_bw = cvCreateImage(cvGetSize(frame_gray), IPL_DEPTH_8U, 1);
 
 	// convert frame to BW
-	cvThreshold(frame_gray, frame_bw, 128, 255, CV_THRESH_BINARY
+	cvThreshold(frame_gray, frame_bw, 192, 255, CV_THRESH_BINARY
 	            | CV_THRESH_OTSU);
 
 	//show frame_bw
@@ -302,7 +302,7 @@ int Calibrator::calibrate()
 
 		QMessageBox msgBox;
 		msgBox.setWindowTitle("Calibration");
-		msgBox.setText("Calibration succesfull.");
+		msgBox.setText("Calibration successfull.");
 		msgBox.setIcon(QMessageBox::Information);
 		msgBox.setDefaultButton(QMessageBox::Ok);
 		msgBox.exec();
