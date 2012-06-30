@@ -275,7 +275,7 @@ int Calibrator::calibrate()
 	}
 	else
 	{
-		debug("Calibration succesfull."); //cerr << "Calibration succesfull." << endl
+		debug("Calibration successfull."); //cerr << "Calibration succesfull." << endl
 		IplImage *quads = cvCreateImage(cvSize(model->blackBoardWidth,
 		                                       model->blackBoardHeight), 8, 3);
 		/*      int W = quads->widthStep;
