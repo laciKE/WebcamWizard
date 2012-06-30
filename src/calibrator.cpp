@@ -251,11 +251,11 @@ int Calibrator::calibrate() {
 		debug("Calibration succesfull."); //cerr << "Calibration succesfull." << endl
 		IplImage *quads = cvCreateImage(cvSize(model->blackBoardWidth,
 				model->blackBoardHeight), 8, 3);
-		int W = quads->widthStep;
+/*		int W = quads->widthStep;
 		int H = quads->height;
 		int x, y;
 
-/*		for (y = 0; y < H; y++)
+		for (y = 0; y < H; y++)
 			for (x = 0; x < W; x++) {
 				quads->imageData[y * W + x] = 0;
 			}

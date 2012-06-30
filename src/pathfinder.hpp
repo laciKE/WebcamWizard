@@ -14,6 +14,7 @@ protected:
 	CvPoint getDesktopCoords(int x, int y);
 	Model *model;
 	bool isLightPen(int R, int G, int B);
+	bool isInteriorPixel(int x, int y);
 	//void drawPoint(CvPoint A, IplImage* img);
 	//void drawLine(CvPoint A, CvPoint B, IplImage* img);
 public:

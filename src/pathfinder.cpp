@@ -8,6 +8,40 @@
 
 using namespace std;
 
+inline double cross(CvPoint A, CvPoint B) {
+	return A.x * B.y - A.y * B.x;
+}
+
+bool PathFinder::isInteriorPixel(int x, int y) {
+	//is webcam point (x,y) in rectangle in blackBoard->calibrator->calibrationData?
+	CalibrationData calibrationData = model->calibrator->calibrationData;
+	//is P(x,y) in triangle ABC or triangle ACD? use barycentric coordinates for verification
+	const double epsilon = 0.0005;
+	CvPoint A = cvPoint(0, 0);
+	CvPoint B = cvPoint(calibrationData.vertex[1].x - calibrationData.vertex[0].x, calibrationData.vertex[1].y - calibrationData.vertex[0].y);
+	CvPoint C = cvPoint(calibrationData.vertex[2].x - calibrationData.vertex[0].x, calibrationData.vertex[2].y - calibrationData.vertex[0].y);
+	CvPoint D = cvPoint(calibrationData.vertex[3].x - calibrationData.vertex[0].x, calibrationData.vertex[3].y - calibrationData.vertex[0].y);
+	CvPoint P = cvPoint(x - calibrationData.vertex[0].x, y - calibrationData.vertex[0].y);
+
+	//P in triangle ABC?
+	double S = cross(B, C);
+	double a = cross(B, P) / S;
+	double b = cross(cvPoint(B.x - P.x, B.y - P.y), cvPoint(C.x - P.x, C.y - P.y)) / S;
+	double c = cross(P, C) / S;
+	if (abs(a + b + c - 1) < epsilon)
+		return true;
+
+	//P in triangle ACD?
+	S = cross(C, D);
+	a = cross(C, P) / S;
+	b = cross(cvPoint(C.x - P.x, C.y - P.y), cvPoint(D.x - P.x, D.y - P.y)) / S;
+	c = cross(P, D) / S;
+	if (abs(a + b + c - 1) < epsilon)
+		return true;
+
+	return false;
+}
+
 CvPoint PathFinder::getDesktopCoords(int x, int y) {
 	//binary search coordinates of webcam point (x,y) in rectangle in blackBoard->calibrator->calibrationData
 	CalibrationData calibrationData = model->calibrator->calibrationData;
@@ -34,7 +68,7 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 			l = p;
 	}
 	result.x = model->blackBoardWidth * l;
-	float l0 = l;
+	//float l0 = l;
 	//cerr << l << " ";
 	//y coordinate
 	l = 0;
@@ -57,9 +91,9 @@ CvPoint PathFinder::getDesktopCoords(int x, int y) {
 	result.y = model->blackBoardHeight * (1 - l);
 	//cerr << 1-l << endl;
 	//cerr << "input: [" << C.x << ", " << C.y << "]  output: [" << result.x << ", " << result.y << "]\n";
-	if((l<2*epsilon) || (l>1-2*epsilon) || (l0<2*epsilon) || (l0>1-2*epsilon)){
+	/*if((l<2*epsilon) || (l>1-2*epsilon) || (l0<2*epsilon) || (l0>1-2*epsilon)){
 		result.x = result.y = 0;
-	}		
+	}*/		
 	return result;
 }
 
@@ -114,7 +148,7 @@ void PathFinderAllRed::drawPath(IplImage* frame, IplImage* desktop, const CvScal
 			int R = (unsigned char) frame->imageData[y * W + x + 2];
 			int G = (unsigned char) frame->imageData[y * W + x + 1];
 			int B = (unsigned char) frame->imageData[y * W + x];
-			if (isLightPen(R, G, B)) {
+			if (isLightPen(R, G, B) && isInteriorPixel(x / 3, y)) {
 				CvPoint pixel = getDesktopCoords(x / 3, y);
 				//drawPoint(pixel,desktop);
 				cvLine(desktop, pixel, pixel, color, thickness);
@@ -152,7 +186,7 @@ void PathFinderMaxSquare::drawPath(IplImage* frame, IplImage* desktop, const CvS
 			int R = (unsigned char) frame->imageData[y * W + x + 2];
 			int G = (unsigned char) frame->imageData[y * W + x + 1];
 			int B = (unsigned char) frame->imageData[y * W + x];
-			if (isLightPen(R, G, B)) {
+			if (isLightPen(R, G, B) && isInteriorPixel(x/3, y)) {
 				maxSquare[y][x/3]=min(maxSquare[y-1][x/3],min(maxSquare[y][x/3-1],maxSquare[y-1][x/3-1]))+1;
 				if(maxSquare[y][x/3]>maxVal){
 					maxVal=maxSquare[y][x/3];
@@ -242,7 +276,7 @@ void PathFinderFitLine::drawPath(IplImage* frame, IplImage* desktop, const CvSca
 			int R = (unsigned char) frame->imageData[y * W + x + 2];
 			int G = (unsigned char) frame->imageData[y * W + x + 1];
 			int B = (unsigned char) frame->imageData[y * W + x];
-			if (isLightPen(R, G, B) && (getDesktopCoords(x/3,y).x>0)){
+			if (isLightPen(R, G, B) && isInteriorPixel(x/3, y)){
 				points.push_back(cvPoint2D32f(x/3,y));
 				cvSeqPush(point_seq,&points[numOfPoints++]);
 			}
