@@ -382,7 +382,7 @@ PathFinderFitLine::~PathFinderFitLine()
 }
 
 
-//Coompute average from all lightpen pixels and draw a line connected to prevoius pixel, if possible
+//Compute average from all lightpen pixels and draw a line connected to prevoius pixel, if possible
 
 void PathFinderAverage::Init()
 {
@@ -449,4 +449,71 @@ PathFinderAverage::PathFinderAverage(Model *m): PathFinder(m)
 
 PathFinderAverage::~PathFinderAverage()
 {
+}
+
+
+//draw line segments from first seen lightpen mark to last seen lightpen mark
+//lightpen marks are computed using average strategy
+
+void PathFinderLineSegment::Init()
+{
+	firstPoint = lastPoint = cvPoint(-1, -1);
+
+	model->debug("PathFinderLineSegment");
+}
+
+void PathFinderLineSegment::drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness)
+{
+	int W = frame->widthStep;
+	//int H = frame->height;
+	int x, y, numOfPoints = 0;
+	CvPoint average = cvPoint(0, 0);
+
+	for (y = min(model->calibrator->calibrationData.vertex[0].y, model->calibrator->calibrationData.vertex[1].y); y < max(model->calibrator->calibrationData.vertex[2].y, model->calibrator->calibrationData.vertex[3].y); y++)
+		for (x = 3 * min(model->calibrator->calibrationData.vertex[0].x, model->calibrator->calibrationData.vertex[1].x); x < 3 * max(model->calibrator->calibrationData.vertex[2].x, model->calibrator->calibrationData.vertex[3].x); x += 3)
+		{
+			int R = (unsigned char) frame->imageData[y * W + x + 2];
+			int G = (unsigned char) frame->imageData[y * W + x + 1];
+			int B = (unsigned char) frame->imageData[y * W + x];
+			if (isLightPen(R, G, B) && isInteriorPixel(x / 3, y))
+			{
+				average.x += x / 3;
+				average.y += y;
+				numOfPoints++;
+			}
+		}
+
+	if (numOfPoints > 0)
+	{
+		average.x /= numOfPoints;
+		average.y /= numOfPoints;
+		CvPoint pixel = getDesktopCoords(average.x, average.y);
+		if (pixel.x > 0)
+		{
+			if (firstPoint.x < 0) {
+				firstPoint = pixel;
+				cvReleaseImage(&oldDesktop);
+				oldDesktop = cvCloneImage(desktop);
+			}
+			lastPoint = pixel;
+			cvCopy(oldDesktop, desktop);
+			cvLine(desktop, lastPoint, firstPoint, color, thickness);
+		}
+		//cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
+	}
+	else
+	{
+		firstPoint = lastPoint = cvPoint(-1, -1);
+		//cerr << "nemam pixel\n";
+	}
+}
+
+PathFinderLineSegment::PathFinderLineSegment(Model *m): PathFinder(m)
+{
+	oldDesktop = cvCreateImage(cvSize(32, 32), 8, 3); //something not null
+}
+
+PathFinderLineSegment::~PathFinderLineSegment()
+{
+	cvReleaseImage(&oldDesktop);
 }

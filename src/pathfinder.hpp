@@ -73,5 +73,18 @@ public:
 	~PathFinderAverage();
 };
 
+class PathFinderLineSegment: public PathFinder
+{
+private:
+	CvPoint firstPoint, lastPoint;
+	IplImage *oldDesktop;
+public:
+	void Init();
+	void drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness);
+	PathFinderLineSegment(Model *m);
+	~PathFinderLineSegment();
+};
+
+
 
 #endif

@@ -161,7 +161,8 @@ void Model::Init()
 	pathFinder[1] = new PathFinderMaxSquare(this);
 	pathFinder[2] = new PathFinderFitLine(this);
 	pathFinder[3] = new PathFinderAverage(this);
-	tool = 2;
+	pathFinder[4] = new PathFinderLineSegment(this);
+	tool = 3;
 
 	pathFinder[tool]->Init();
 

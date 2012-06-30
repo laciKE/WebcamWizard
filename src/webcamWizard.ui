@@ -693,7 +693,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <property name="modelColumn">
     <number>0</number>
@@ -716,6 +716,11 @@
    <item>
     <property name="text">
      <string>Average</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Line segments</string>
     </property>
    </item>
   </widget>
