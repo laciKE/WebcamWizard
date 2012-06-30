@@ -5,11 +5,13 @@
 #include <opencv/highgui.h>
 #include "model.hpp"
 
-typedef struct {
+typedef struct
+{
 	CvPoint vertex[4];
 } CalibrationData;
 
-class Calibrator {
+class Calibrator
+{
 private:
 	class Model *model;
 	void DetectAndDrawQuads(IplImage *img);

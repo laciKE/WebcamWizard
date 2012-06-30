@@ -1,5 +1,5 @@
 /*
-	Strategy design pattern for finding path of red curve in captured frames
+    Strategy design pattern for finding path of red curve in captured frames
 */
 
 #ifndef PATHFINDER_HPP
@@ -9,7 +9,8 @@
 #include <opencv/highgui.h>
 #include "model.hpp"
 
-class PathFinder {
+class PathFinder
+{
 protected:
 	CvPoint getDesktopCoords(int x, int y);
 	Model *model;
@@ -18,52 +19,56 @@ protected:
 	//void drawPoint(CvPoint A, IplImage* img);
 	//void drawLine(CvPoint A, CvPoint B, IplImage* img);
 public:
-        virtual void Init(){};
-        virtual void drawPath(IplImage* /*frame*/, IplImage* /*desktop*/, const CvScalar& /*color*/, int /*thickness*/ ){};
+	virtual void Init() {};
+	virtual void drawPath(IplImage * /*frame*/, IplImage * /*desktop*/, const CvScalar & /*color*/, int /*thickness*/) {};
 	PathFinder(Model *m);
 	~PathFinder();
 };
 
 
-class PathFinderAllRed: public PathFinder {
+class PathFinderAllRed: public PathFinder
+{
 private:
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness);
+	void drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness);
 	PathFinderAllRed(Model *m);
 	~PathFinderAllRed();
 };
 
-class PathFinderMaxSquare: public PathFinder {
+class PathFinderMaxSquare: public PathFinder
+{
 private:
-	int** maxSquare;
-	CvPoint lastPoint;	
+	int **maxSquare;
+	CvPoint lastPoint;
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness);
+	void drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness);
 	PathFinderMaxSquare(Model *m);
 	~PathFinderMaxSquare();
 };
 
-class PathFinderFitLine: public PathFinder {
+class PathFinderFitLine: public PathFinder
+{
 private:
-	CvMemStorage* storage;
-	CvSeq* point_seq;
-	CvPoint lastPoint;	
+	CvMemStorage *storage;
+	CvSeq *point_seq;
+	CvPoint lastPoint;
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness);
+	void drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness);
 	PathFinderFitLine(Model *m);
 	~PathFinderFitLine();
 };
 
 
-class PathFinderAverage: public PathFinder {
+class PathFinderAverage: public PathFinder
+{
 private:
-	CvPoint lastPoint;	
+	CvPoint lastPoint;
 public:
 	void Init();
-	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness);
+	void drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness);
 	PathFinderAverage(Model *m);
 	~PathFinderAverage();
 };

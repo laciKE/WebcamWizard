@@ -9,7 +9,8 @@
 #include "pathfinder.hpp"
 #include "view.hpp"
 
-class Model {
+class Model
+{
 private:
 	IplImage *blackBoardImage;
 	IplImage *webcamImage;
@@ -27,14 +28,14 @@ public:
 	CvCapture *webcam;
 	int update();
 	//actions on model
-	void setColor(const CvScalar& color);
+	void setColor(const CvScalar &color);
 	void setThickness(int thickness);
 	void setTool(int tool);
 	//void setPathFinder(PathFinder *pF);
 	void clear();
 	int calibrate();
 	void debug(const char *str);
-	
+
 	IplImage *getBlackBoardImage();
 	IplImage *getWebcamImage();
 	void setBlackBoardImage(IplImage *img);
