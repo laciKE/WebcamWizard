@@ -58,4 +58,15 @@ public:
 };
 
 
+class PathFinderAverage: public PathFinder {
+private:
+	CvPoint lastPoint;	
+public:
+	void Init();
+	void drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness);
+	PathFinderAverage(Model *m);
+	~PathFinderAverage();
+};
+
+
 #endif

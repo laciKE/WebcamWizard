@@ -17,7 +17,7 @@ private:
 	CvScalar color;
 	CvScalar bgColor;
 	int thickness;
-	const static int numberOfPathFinders = 3;
+	const static int numberOfPathFinders = 4;
 	class PathFinder *pathFinder[numberOfPathFinders];
 	int tool;
 public:

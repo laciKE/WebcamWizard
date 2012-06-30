@@ -315,3 +315,59 @@ PathFinderFitLine::~PathFinderFitLine(){
 	cvClearSeq(point_seq);
 	cvReleaseMemStorage(&storage);
 }
+
+
+//Coompute average from all lightpen pixels and draw a line connected to prevoius pixel, if possible
+
+void PathFinderAverage::Init() {
+	lastPoint.x = -1;
+	lastPoint.y = -1;
+
+	model->debug("PathFinderAverage");
+}
+
+void PathFinderAverage::drawPath(IplImage* frame, IplImage* desktop, const CvScalar& color, int thickness){
+	int W = frame->widthStep;
+	//int H = frame->height;
+	int x, y, numOfPoints=0;
+	CvPoint average = cvPoint(0,0);
+
+	for (y = min(model->calibrator->calibrationData.vertex[0].y,model->calibrator->calibrationData.vertex[1].y); y < max(model->calibrator->calibrationData.vertex[2].y,model->calibrator->calibrationData.vertex[3].y); y++)
+		for (x = 3*min(model->calibrator->calibrationData.vertex[0].x,model->calibrator->calibrationData.vertex[1].x); x < 3*max(model->calibrator->calibrationData.vertex[2].x,model->calibrator->calibrationData.vertex[3].x); x += 3) {
+			int R = (unsigned char) frame->imageData[y * W + x + 2];
+			int G = (unsigned char) frame->imageData[y * W + x + 1];
+			int B = (unsigned char) frame->imageData[y * W + x];
+			if (isLightPen(R, G, B) && isInteriorPixel(x/3, y)){
+				average.x += x/3;
+				average.y += y;
+				numOfPoints++;
+			}
+		}
+
+	if(numOfPoints>0){
+		average.x /= numOfPoints;
+		average.y /= numOfPoints;
+		CvPoint pixel=getDesktopCoords(average.x, average.y);
+		if(pixel.x>0){
+		
+		if(lastPoint.x>0)
+			//drawLine(lastPoint,pixel,desktop);
+			cvLine(desktop, lastPoint, pixel, color, thickness);
+		else
+			//drawPoint(pixel,desktop);
+			cvLine(desktop, pixel, pixel, color, thickness);
+
+		lastPoint=pixel;
+		}
+		//cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
+	 } else {
+	 	lastPoint=cvPoint(-1,-1);
+	 	//cerr << "nemam pixel\n";
+	}
+}
+
+PathFinderAverage::PathFinderAverage(Model *m):PathFinder(m){
+}
+
+PathFinderAverage::~PathFinderAverage(){
+}

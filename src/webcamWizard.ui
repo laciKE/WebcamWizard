@@ -713,6 +713,11 @@
      <string>Fit line</string>
     </property>
    </item>
+   <item>
+    <property name="text">
+     <string>Average</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>

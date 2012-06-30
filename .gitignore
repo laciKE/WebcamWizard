@@ -3,6 +3,7 @@
 *.o
 *~
 *.swp
+ui_*
 moc_*
 bin/
 video/
