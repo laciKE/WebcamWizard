@@ -61,6 +61,8 @@ View::View(Model *model, QWidget *parent)
         //debugWidget->setFeatures(QDockWidget::);
         //debugWidget->mouseGrabber()
         desktop->setStyleSheet("QLabel { background-color : black; color : blue; }");
+	colorButton->setStyleSheet("background-color : yellow");
+	
         timer = new QTimer(this);
 	this->model = model;
     	
@@ -157,9 +159,9 @@ void View::on_aboutButton_clicked()
 {
      QMessageBox msgBox;
      msgBox.setWindowTitle("About");
-     msgBox.setText("Application was created by Ladislav Baco and Anton Koval");
+     msgBox.setText("Application was created by Ladislav Baco and Anton Koval, 2011-2012");
      msgBox.setIcon(QMessageBox::Information);
-     msgBox.setInformativeText("Webcam Wizard was project on the subject to school");
+     msgBox.setInformativeText("Webcam Wizard is school project at Comenius University, Faculty of Mathematics, Physics and Informatics.");
      msgBox.setDefaultButton(QMessageBox::Ok);
      msgBox.exec();
 }
@@ -196,6 +198,8 @@ void View::on_saveButton_clicked()
 void View::on_colorButton_clicked()
 {
      QColor color = QColorDialog::getColor (Qt::white, this);
+     QString style = "background-color: rgb(%1, %2, %3);";
+     colorButton->setStyleSheet(style.arg(color.red()).arg(color.green()).arg(color.blue()));
      model->setColor(CV_RGB(color.red(), color.green(), color.blue()));
 }
 

@@ -133,7 +133,7 @@ void Model::Init() {
 	//desktopDrawer = new DesktopDrawer(this);
 	calibrator = new Calibrator(this);
 
-	color = CV_RGB(0, 255, 255);
+	color = CV_RGB(255, 255, 0);
 	thickness = 1;
 	pathFinder[0] = new PathFinderAllRed(this);
 	pathFinder[1] = new PathFinderMaxSquare(this);

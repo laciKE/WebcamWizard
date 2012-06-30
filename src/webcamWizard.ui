@@ -443,7 +443,7 @@
   <widget class="QPushButton" name="calibrateButton">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>35</x>
      <y>10</y>
      <width>91</width>
      <height>31</height>
@@ -501,7 +501,7 @@
   <widget class="QPushButton" name="clearButton">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>290</x>
      <y>10</y>
      <width>81</width>
      <height>31</height>
@@ -611,7 +611,7 @@
   <widget class="QSpinBox" name="spinBox">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>400</x>
      <y>12</y>
      <width>41</width>
      <height>27</height>
@@ -670,14 +670,17 @@
   <widget class="QPushButton" name="colorButton">
    <property name="geometry">
     <rect>
-     <x>425</x>
-     <y>10</y>
-     <width>81</width>
-     <height>31</height>
+     <x>450</x>
+     <y>11</y>
+     <width>28</width>
+     <height>28</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string extracomment="color"/>
+   </property>
    <property name="text">
-    <string>Color</string>
+    <string/>
    </property>
   </widget>
   <widget class="QComboBox" name="strategyBox">
