@@ -76,24 +76,22 @@ View::~View()
 {
 	timer->stop();
 	delete timer;
-	//delete model;
 }
 
 void View::refresh()  // timer call refresh
 {
-	IplImage *img = model->getBlackBoardImage(); // IPLImage
+	IplImage *img = model->getBlackBoardImage(); // IplImage
 	QImage *qimg = IplImage2QImage(img);
 	this->desktop->setPixmap(QPixmap::fromImage(*qimg));
 	delete qimg;
 	cvReleaseImage(&img);
-//Label.setPixmap(QPixmap::fromImage(myImage));
 
-	img = model->getWebcamImage(); // IPLImage
+	img = model->getWebcamImage(); // IplImage
 	qimg = IplImage2QImage(img);
 	this->camera->setPixmap(QPixmap::fromImage(*qimg));
 	delete qimg;
 	cvReleaseImage(&img);
-//QApplication::flush();
+	//QApplication::flush();
 	QCoreApplication::processEvents();
 }
 
@@ -101,7 +99,6 @@ void View::refreshSlot()
 {
 	model->update();
 	refresh();
-	//debugView->refresh();
 }
 
 void View::debug(QString str)
@@ -141,24 +138,7 @@ void View::on_calibrateButton_clicked()
 {
 	model->calibrate();
 
-	//debugOutput->append(QString("chcem bezat")); //std::cerr << " chcem bezat\n";
-	//bool run = 1;
 	timer->start(33);
-
-
-	/*
-	//while (model->update() && run) {
-	        refresh();
-	    char c = cvWaitKey(33);
-	    //debugOutput->append(QString("bezim"));  //std::cerr << "bezim\n";
-	    switch(c){
-	            case 27:
-	                    run = 0;
-	                    break; //ESC
-	    }
-	// }
-	*/
-	//delete pH;
 }
 
 void View::on_clearButton_clicked()
@@ -226,4 +206,3 @@ void View::on_strategyBox_currentIndexChanged(int index)
 {
 	model->setTool(index);
 }
-

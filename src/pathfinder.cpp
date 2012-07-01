@@ -119,28 +119,8 @@ inline bool PathFinder::isLightPen(int R, int G, int B)
 	//return ((R > 220) && (R > (G + B) * 2 / 3));
 	return ((B > 245) && (B > (G + R) * 3 / 4));
 }
-/*
-inline void PathFinder::drawPoint(CvPoint A, IplImage* img) {
-    img->imageData[(int)(A.y * img->widthStep + 3 * A.x + 2)] = 0;
-    img->imageData[(int)(A.y * img->widthStep + 3 * A.x + 1)] = 255;
-    img->imageData[(int)(A.y * img->widthStep + 3 * A.x + 0)] = 255;
-}
-*/
 
-inline int sqr(int x)
-{
-	return x * x;
-}
 
-/*
-void PathFinder::drawLine(CvPoint A, CvPoint B, IplImage* img) {
-    int d = (int) (sqrt(sqr(A.x - B.x) + sqr(A.y - B.y) + 1));
-    for (int i = 0; i <= d; i++) {
-        drawPoint(cvPoint(A.x + i * (B.x - A.x) / d, A.y + i * (B.y - A.y) / d), img);
-    }
-
-}
-*/
 PathFinder::PathFinder(Model *m)
 {
 	model = m;
@@ -150,7 +130,6 @@ PathFinder::~PathFinder()
 {
 
 }
-
 
 
 
@@ -175,7 +154,6 @@ void PathFinderAllRed::drawPath(IplImage *frame, IplImage *desktop, const CvScal
 			if (isLightPen(R, G, B) && isInteriorPixel(x / 3, y))
 			{
 				CvPoint pixel = getDesktopCoords(x / 3, y);
-				//drawPoint(pixel,desktop);
 				cvLine(desktop, pixel, pixel, color, thickness);
 			}
 		}
@@ -237,23 +215,19 @@ void PathFinderMaxSquare::drawPath(IplImage *frame, IplImage *desktop, const CvS
 	{
 		CvPoint pixel = getDesktopCoords(maxX - maxVal / 2, maxY - maxVal / 2);
 		if (lastPoint.x > 0)
-			//drawLine(lastPoint,pixel,desktop);
 		{
 			cvLine(desktop, lastPoint, pixel, color, thickness);
 		}
 		else
-			//drawPoint(pixel,desktop);
 		{
 			cvLine(desktop, pixel, pixel, color, thickness);
 		}
 
 		lastPoint = pixel;
-//		cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
 	}
 	else
 	{
 		lastPoint = cvPoint(-1, -1);
-//	     cerr << "nemam pixel\n";
 	}
 }
 
@@ -269,7 +243,6 @@ PathFinderMaxSquare::PathFinderMaxSquare(Model *m): PathFinder(m)
 		captureWidth = 640;
 		captureHeight = 480;
 	}
-	//cerr << "capture resolution is " << captureWidth << "x" << captureHeight << endl;
 	maxSquare = (int **) malloc(sizeof(int *) * (captureHeight + 4));
 	for (int i = 0; i < captureHeight; i++)
 	{
@@ -301,24 +274,10 @@ void PathFinderFitLine::Init()
 
 	model->debug("PathFinderFitLine");
 }
-/*
-    CvPoint2D32f points[10];
-    for(int i=0; i<10; i++){
-        points[i].x=points[i].y=i;
-    }
-    float line[4];
-    CvMemStorage* storage = cvCreateMemStorage(0);
-    CvSeq* point_seq = cvCreateSeq( CV_32FC2, sizeof(CvSeq), sizeof(CvPoint2D32f), storage );
-    for(int i=0; i<10; i++)
-        cvSeqPush(point_seq, &points[i]);
-    cvFitLine(point_seq,CV_DIST_L2,0,0.01,0.01,line);
-    for(int i=0; i<4; i++)
-        cerr << line[i] << endl;
-*/
+
 void PathFinderFitLine::drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness)
 {
 	int W = frame->widthStep;
-	//int H = frame->height;
 	int x, y, numOfPoints = 0;
 	cvClearSeq(point_seq);
 	float line[4];
@@ -340,32 +299,26 @@ void PathFinderFitLine::drawPath(IplImage *frame, IplImage *desktop, const CvSca
 	if (numOfPoints > 3)
 	{
 		cvFitLine(point_seq, CV_DIST_L2, 0, 0.1, 0.1, line);
-		//for(int i=0; i<4; i++)
-		//  cerr << line[i] << " ";
 
 		CvPoint pixel = getDesktopCoords(line[2], line[3]);
 		if (pixel.x > 0)
 		{
 
 			if (lastPoint.x > 0)
-				//drawLine(lastPoint,pixel,desktop);
 			{
 				cvLine(desktop, lastPoint, pixel, color, thickness);
 			}
 			else
-				//drawPoint(pixel,desktop);
 			{
 				cvLine(desktop, pixel, pixel, color, thickness);
 			}
 
 			lastPoint = pixel;
 		}
-		//cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
 	}
 	else
 	{
 		lastPoint = cvPoint(-1, -1);
-		//cerr << "nemam pixel\n";
 	}
 }
 
@@ -395,7 +348,6 @@ void PathFinderAverage::Init()
 void PathFinderAverage::drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness)
 {
 	int W = frame->widthStep;
-	//int H = frame->height;
 	int x, y, numOfPoints = 0;
 	CvPoint average = cvPoint(0, 0);
 
@@ -422,24 +374,20 @@ void PathFinderAverage::drawPath(IplImage *frame, IplImage *desktop, const CvSca
 		{
 
 			if (lastPoint.x > 0)
-				//drawLine(lastPoint,pixel,desktop);
 			{
 				cvLine(desktop, lastPoint, pixel, color, thickness);
 			}
 			else
-				//drawPoint(pixel,desktop);
 			{
 				cvLine(desktop, pixel, pixel, color, thickness);
 			}
 
 			lastPoint = pixel;
 		}
-		//cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
 	}
 	else
 	{
 		lastPoint = cvPoint(-1, -1);
-		//cerr << "nemam pixel\n";
 	}
 }
 
@@ -465,7 +413,6 @@ void PathFinderLineSegment::Init()
 void PathFinderLineSegment::drawPath(IplImage *frame, IplImage *desktop, const CvScalar &color, int thickness)
 {
 	int W = frame->widthStep;
-	//int H = frame->height;
 	int x, y, numOfPoints = 0;
 	CvPoint average = cvPoint(0, 0);
 
@@ -499,12 +446,10 @@ void PathFinderLineSegment::drawPath(IplImage *frame, IplImage *desktop, const C
 			cvCopy(oldDesktop, desktop);
 			cvLine(desktop, lastPoint, firstPoint, color, thickness);
 		}
-		//cerr << "mam pixel " << pixel.x << " " << pixel.y << endl;
 	}
 	else
 	{
 		firstPoint = lastPoint = cvPoint(-1, -1);
-		//cerr << "nemam pixel\n";
 	}
 }
 

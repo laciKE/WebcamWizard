@@ -15,9 +15,7 @@ int Model::update()
 		return 0;
 	}
 
-	//TODO moznost vypnut zobrazovanie webcamImage
 	cvResize(frame, webcamImage);
-	//cvShowImage(webcamWindow, webcamImage);
 
 	if (!pathFinder)
 	{
@@ -26,7 +24,6 @@ int Model::update()
 
 	pathFinder[tool]->drawPath(frame, blackBoardImage, color, thickness);
 
-	//cvShowImage(blackBoardWindow, blackBoardImage);
 
 	return 1;
 }
@@ -82,12 +79,7 @@ void Model::setBlackBoardImage(IplImage *img)
 	blackBoardImage = cvCloneImage(img);
 	view->refresh();
 }
-/*
- void Model::setPathFinder(class PathFinder* pF){
- pathFinder = pF;
- pathFinder->Init();
- }
- */
+
 Model::~Model()
 {
 	delete calibrator;
@@ -95,21 +87,14 @@ Model::~Model()
 	{
 		delete pathFinder[i];
 	}
-	//delete desktopDrawer;
+
 	cvReleaseCapture(&webcam);
 	cvReleaseImage(&blackBoardImage);
 	cvReleaseImage(&webcamImage);
-	//cvDestroyWindow(blackBoardWindow);
-	//cvDestroyWindow(webcamWindow);
 }
 
-Model::Model(/*View *parent*/)
+Model::Model()
 {
-	//view = parent;
-	//window names initialization
-	//strcpy(blackBoardWindow, "Model");
-	//strcpy(webcamWindow, "Webcam");
-	//webcam initialization
 	webcam = cvCaptureFromCAM(0);
 	//webcam=cvCreateCameraCapture(CV_CAP_ANY);
 	if (!webcam)
@@ -126,16 +111,6 @@ void Model::registerView(View *view)
 
 void Model::Init()
 {
-	/*
-	 //windows initialization
-	 cvNamedWindow(webcamWindow, CV_WINDOW_AUTOSIZE);
-	 cvMoveWindow(webcamWindow, 600, 0);
-
-	 cvNamedWindow(blackBoardWindow, CV_WINDOW_AUTOSIZE);
-	 //cvMoveWindow(blackBoardWindow, 328, 0);
-	 cvMoveWindow(blackBoardWindow, 0, 0);
-	 */
-
 	blackBoardWidth = view->getDesktopWidth();
 	blackBoardHeight = view->getDesktopHeight();
 	blackBoardImage = cvCreateImage(cvSize(blackBoardWidth, blackBoardHeight), IPL_DEPTH_8U, 3);
@@ -152,7 +127,6 @@ void Model::Init()
 	                            frame->nChannels);
 
 	//private variables initialization
-	//desktopDrawer = new DesktopDrawer(this);
 	calibrator = new Calibrator(this);
 
 	color = CV_RGB(255, 255, 0);
@@ -168,7 +142,6 @@ void Model::Init()
 
 	clear();
 
-	//cvSetWindowProperty("Model",CV_WND_PROP_FULLSCREEN,0);
 	debug("Model is ready for calibration.");
 }
 

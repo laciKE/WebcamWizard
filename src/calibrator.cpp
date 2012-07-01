@@ -104,16 +104,6 @@ void Calibrator::DetectAndDrawQuads(IplImage *img)
 	}
 
 	cvReleaseMemStorage(&storage);
-	/*
-	 IplImage *colorRet = cvCreateImage(cvGetSize(ret),8,3);
-	 cvCvtColor(ret,colorRet,CV_GRAY2RGB);
-	 cvReleaseImage(&ret);
-
-	 IplImage *resizedRet = cvCreateImage(cvSize(model->blackBoardWidth, model->blackBoardHeight),8,3);
-	 cvResize(colorRet,resizedRet);
-	 cvReleaseImage(&colorRet);
-	 */
-	//return ret;
 }
 
 //calibration of desktop
@@ -121,7 +111,7 @@ void Calibrator::DetectAndDrawQuads(IplImage *img)
 //(Tono)
 int Calibrator::calibrate()
 {
-	debug("Calibration start"); //cerr << "calibration start" << endl;
+	debug("Calibration start"); 
 	IplImage *desktop = cvCreateImage(cvSize(model->blackBoardWidth,
 	                                  model->blackBoardHeight), IPL_DEPTH_8U, 3);
 
@@ -137,12 +127,9 @@ int Calibrator::calibrate()
 		}
 
 	model->setBlackBoardImage(desktop);
-	//cvShowImage(blackBoard->blackBoardWindow, desktop);
 
-	//wait 2000ms
 	debug("white image for detection blackboard");
 	sleep(2000);
-	//debug("skoncil som");
 
 	//capture frame from webcam
 	IplImage *frame = cvQueryFrame(model->webcam);
@@ -174,37 +161,14 @@ int Calibrator::calibrate()
 	//show frame_bw
 
 
-	//cvShowImage(blackBoard->webcamWindow,frame_bw);
-	//cerr << "frame" << endl;
-
-	// wait 1s
-	//sleep(1000);
-
 	// function DetectAntDrawQuads need storage
 	// init storage
 	storage = cvCreateMemStorage(0);
 
 	// show frame with rectangle
 
-
 	DetectAndDrawQuads(frame_bw);
 	cvReleaseImage(&frame_bw);
-
-	/*
-	 cvNamedWindow("test", CV_WINDOW_AUTOSIZE);
-	 cvMoveWindow("test", 600, 0);
-	 cvShowImage("test", quads);
-	 */
-	/*
-	 model->setBlackBoardImage(quads);
-
-	 // wait 2s
-	 debug("najdeny obdlznik, cakam 1000ms");
-	 sleep(5000);
-	 debug("skoncil som");
-
-	 cvReleaseImage(&quads);
-	 */
 
 	// fixed problem with sequence of calib
 	int minxy = 500600;
@@ -231,12 +195,12 @@ int Calibrator::calibrate()
 
 	for (int i = 0; i < 4; i++)
 	{
+		/*
 		char str[256];
 		sprintf(str, "%d:%d %d", i, calibrationData.vertex[i].x,
 		        calibrationData.vertex[i].y);
-		//cerr << i << ": " << calibrationData.vertex[i].x << " " << calibrationData.vertex[i].y << endl;
-		//debug(str);
-
+		debug(str);
+		*/
 		calibrationData.vertex[i] = calib[(8 + mini + current * i) % 4];
 
 	}
@@ -245,7 +209,7 @@ int Calibrator::calibrate()
 	cvReleaseImage(&frame_gray);
 	cvReleaseImage(&frame_bw);
 
-	debug("calibration end"); //cerr << "calibration end" << endl;
+	debug("calibration end");
 
 	bool test = false;
 	for (int i = 0; i < 4; i++)
@@ -264,7 +228,7 @@ int Calibrator::calibrate()
 		calibrationData.vertex[1] = cvPoint(640, 0);
 		calibrationData.vertex[2] = cvPoint(640, 480);
 		calibrationData.vertex[3] = cvPoint(0, 480);
-		debug("Calibration failed. Calibration is on manual mod."); //cerr << "Calibration failed. Calibration is on manual mod."<< endl;
+		debug("Calibration failed. Calibration is on manual mod.");
 		QMessageBox msgBox;
 		msgBox.setWindowTitle("Calibration");
 		msgBox.setText("Calibration failed. Calibration is on manual mod.");
@@ -275,18 +239,10 @@ int Calibrator::calibrate()
 	}
 	else
 	{
-		debug("Calibration successfull."); //cerr << "Calibration succesfull." << endl
+		debug("Calibration successfull.");
 		IplImage *quads = cvCreateImage(cvSize(model->blackBoardWidth,
 		                                       model->blackBoardHeight), 8, 3);
-		/*      int W = quads->widthStep;
-		        int H = quads->height;
-		        int x, y;
 
-		        for (y = 0; y < H; y++)
-		            for (x = 0; x < W; x++) {
-		                quads->imageData[y * W + x] = 0;
-		            }
-		*/
 		cvLine(frame, calibrationData.vertex[0], calibrationData.vertex[1],
 		       CV_RGB(255, 255, 255));
 		cvLine(frame, calibrationData.vertex[1], calibrationData.vertex[2],

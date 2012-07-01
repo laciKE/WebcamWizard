@@ -22,16 +22,15 @@ private:
 	class PathFinder *pathFinder[numberOfPathFinders];
 	int tool;
 public:
-	class Calibrator *calibrator; //TODO getCalibrationData
+	class Calibrator *calibrator;
 	int blackBoardWidth;
 	int blackBoardHeight;
 	CvCapture *webcam;
+
 	int update();
-	//actions on model
 	void setColor(const CvScalar &color);
 	void setThickness(int thickness);
 	void setTool(int tool);
-	//void setPathFinder(PathFinder *pF);
 	void clear();
 	int calibrate();
 	void debug(const char *str);
@@ -42,7 +41,6 @@ public:
 	char blackBoardWindow[64], webcamWindow[64];
 	void registerView(View *view);
 	void Init();
-	//Model(View *parent);
 	Model();
 	~Model();
 };

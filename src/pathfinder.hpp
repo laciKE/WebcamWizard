@@ -16,8 +16,6 @@ protected:
 	Model *model;
 	bool isLightPen(int R, int G, int B);
 	bool isInteriorPixel(int x, int y);
-	//void drawPoint(CvPoint A, IplImage* img);
-	//void drawLine(CvPoint A, CvPoint B, IplImage* img);
 public:
 	virtual void Init() {};
 	virtual void drawPath(IplImage * /*frame*/, IplImage * /*desktop*/, const CvScalar & /*color*/, int /*thickness*/) {};
@@ -84,7 +82,5 @@ public:
 	PathFinderLineSegment(Model *m);
 	~PathFinderLineSegment();
 };
-
-
 
 #endif
